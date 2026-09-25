@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>index.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>uslugi.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>strizhka.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>okrashivanie.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>manikyur.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>pedikyur.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>kosmetologiya.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>makiyazh.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>ceny.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>about.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>novosti.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>reviews.html</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>faq.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>contacts.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>personal.html</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>karta-sajta.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
+</urlset>

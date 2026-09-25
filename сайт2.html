@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Задание 7</title>
+    <style>
+        .step {
+            margin: 15px 0;
+            padding: 10px;
+            border-left: 3px solid #007acc;
+        }
+
+        .array {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+        }
+
+        .number {
+            color: #d63384;
+            font-weight: bold;
+        }
+
+        .text {
+            color: #0d6efd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Задание 7: Модификация массива</h2>
+    <div id="result"></div>
+
+    <script>
+        // Исходные данные для варианта 8
+        let R = [3, 7, 5];
+        const k = 3, m = 4, n = 5;
+
+        let steps = [];
+
+        // Шаг 1: Исходный массив
+        steps.push({
+            title: "Исходный массив R",
+            array: [...R],
+            description: `Создан массив из ${k} элементов: [3, 7, 5]`
+        });
+
+        // Шаг 2: Добавляем m числовых элементов в начало
+        const numbersToAdd = [10, 20, 30, 40]; // Пример числовых элементов
+        for (let i = 0; i < m; i++) {
+            R.unshift(numbersToAdd[i]);
+        }
+
+        steps.push({
+            title: `Добавление ${m} числовых элементов в начало`,
+            array: [...R],
+            description: `Добавлены элементы: [${numbersToAdd.join(', ')}] с помощью метода unshift()`
+        });
+
+        // Шаг 3: Добавляем n текстовых элементов в конец
+        const textsToAdd = ['текст1', 'слово2', 'элемент3', 'данные4', 'инфо5'];
+        for (let i = 0; i < n; i++) {
+            R.push(textsToAdd[i]);
+        }
+
+        steps.push({
+            title: `Добавление ${n} текстовых элементов в конец`,
+            array: [...R],
+            description: `Добавлены элементы: [${textsToAdd.map(t => `"${t}"`).join(', ')}] с помощью метода push()`
+        });
+
+        // Формируем HTML результат
+        let resultHTML = `
+            <div class="step">
+                <h3>Исходные параметры:</h3>
+                <p><b>Массив R:</b> [3, 7, 5]</p>
+                <p><b>k (исходных элементов):</b> ${k}</p>
+                <p><b>m (числовых в начало):</b> ${m}</p>
+                <p><b>n (текстовых в конец):</b> ${n}</p>
+            </div>
+        `;
+
+        // Отображаем все шаги
+        steps.forEach((step, index) => {
+            const formattedArray = step.array.map(item =>
+                typeof item === 'number' ?
+                    `<span class="number">${item}</span>` :
+                    `<span class="text">"${item}"</span>`
+            ).join(', ');
+
+            resultHTML += `
+                <div class="step">
+                    <h3>Шаг ${index + 1}: ${step.title}</h3>
+                    <p>${step.description}</p>
+                    <div class="array">[${formattedArray}]</div>
+                    <p><b>Количество элементов:</b> ${step.array.length}</p>
+                </div>
+            `;
+        });
+
+        // Итоговый результат
+        const numberCount = R.filter(item => typeof item === 'number').length;
+        const textCount = R.filter(item => typeof item === 'string').length;
+
+        resultHTML += `
+            <div class="step" style="border-color: #198754;">
+                <h3>Итоговый результат</h3>
+                <div class="array" style="background: #d1e7dd;">
+                    [${R.map(item =>
+            typeof item === 'number' ?
+                `<span class="number">${item}</span>` :
+                `<span class="text">"${item}"</span>`
+        ).join(', ')}]
+                </div>
+                <p><b>Общее количество элементов:</b> ${R.length}</p>
+                <p><b>Проверка:</b> ${k} (исходных) + ${m} (в начало) + ${n} (в конец) = ${k + m + n}</p>
+                <p><b>Числовых элементов:</b> ${numberCount}</p>
+                <p><b>Текстовых элементов:</b> ${textCount}</p>
+            </div>
+            
+            <div class="step">
+                <h3>Использованные методы массива:</h3>
+                <ul>
+                    <li><b>unshift()</b> - добавляет элементы в начало массива</li>
+                    <li><b>push()</b> - добавляет элементы в конец массива</li>
+                    <li><b>filter()</b> - фильтрует элементы по условию</li>
+                </ul>
+            </div>
+        `;
+
+        document.getElementById('result').innerHTML = resultHTML;
+
+        // Вывод в консоль
+        console.log("=== Задание 7 ===");
+        console.log("Исходный массив:", [3, 7, 5]);
+        console.log("После добавления в начало:", R.slice(0, m + k));
+        console.log("Итоговый массив:", R);
+        console.log("Количество элементов:", R.length);
+        console.log("Числовые элементы:", numberCount);
+        console.log("Текстовые элементы:", textCount);
+    </script>
+</body>
+
+</html>

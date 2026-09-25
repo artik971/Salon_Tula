@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Салон красоты «Элегантность» в Туле — стрижки, маникюр, окрашивание</title>
+    <meta name="description" content="Салон красоты в Туле на ул. Бондаренко, 25. Стрижки, окрашивание, маникюр, косметология. Онлайн-запись, калькулятор цен. Телефон +7 (961) 265-35-25.">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Стили для калькулятора */
+        .calculator-section {
+            background: linear-gradient(135deg, #f9f5fa 0%, #f0ebf5 100%);
+            padding: 60px 0;
+            margin: 40px 0;
+            border-radius: 20px;
+            border: 1px solid #e8e0e5;
+        }
+
+        .calculator-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e8e0e5;
+        }
+
+        .service-category {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .service-category:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .service-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border: 2px solid #e8e0e5;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .service-option:hover {
+            border-color: #8a6fa8;
+            transform: translateY(-2px);
+        }
+
+        .service-option.selected {
+            border-color: #8a6fa8;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            box-shadow: 0 5px 15px rgba(138, 111, 168, 0.2);
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-name {
+            font-weight: 600;
+            color: #725172;
+            margin-bottom: 2px;
+        }
+
+        .service-duration {
+            font-size: 0.85em;
+            color: #8a6fa8;
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: #725172;
+            font-size: 1.1em;
+        }
+
+        .calculator-result {
+            background: linear-gradient(135deg, #8a6fa8, #725172);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            text-align: center;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        .calculator-result.show {
+            display: block;
+        }
+
+        .total-price {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .selected-services-list {
+            text-align: left;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        .selected-service-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .selected-service-item:last-child {
+            border-bottom: none;
+        }
+
+        .calculator-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .calculator-header h2 {
+            color: #725172;
+            margin-bottom: 10px;
+        }
+
+        .calculator-header p {
+            color: #8a6fa8;
+            font-size: 1.1em;
+        }
+
+        /* Стили для выбора пола */
+        .gender-selection {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .gender-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #e8e0e5;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .gender-option:hover {
+            border-color: #8a6fa8;
+            transform: translateY(-2px);
+        }
+
+        .gender-option.selected {
+            border-color: #725172;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            box-shadow: 0 3px 10px rgba(114, 81, 114, 0.2);
+        }
+
+        .gender-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #8a6fa8;
+        }
+
+        .gender-option.selected .gender-icon {
+            color: #725172;
+        }
+
+        .gender-text {
+            font-weight: 600;
+            color: #725172;
+        }
+
+        /* Стили для услуг в зависимости от пола */
+        .gender-specific-services {
+            display: none;
+        }
+
+        .gender-specific-services.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-actions {
+                flex-direction: column;
+            }
+
+            .calculator-card {
+                padding: 20px;
+            }
+
+            .service-option {
+                padding: 10px;
+            }
+
+            .gender-selection {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <div class="container">
+            <p class="mb-0" style="font-family:'Cormorant Garamond',serif;font-size:2em;color:#725172;font-weight:600;">Салон красоты «Элегантность»</p>
+            <p>Тула, ул. Бондаренко, 25 · +7 (961) 265-35-25</p>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <div class="row">
+            <!-- Вертикальное меню -->
+            <nav class="sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="novosti.html">Новости</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="personal.html" id="personalCabinetLink">Личный
+                            кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#calculator">Калькулятор</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#signup" onclick="openBookingModal()">Записаться</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Кнопка бургер-меню для мобильных -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Мобильное меню -->
+            <nav class="mobile-menu" id="mobileMenu">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="index.html" onclick="closeMenu()">Главная</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html" onclick="closeMenu()">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html" onclick="closeMenu()">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html" onclick="closeMenu()">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="novosti.html" onclick="closeMenu()">Новости</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html" onclick="closeMenu()">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html" onclick="closeMenu()">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html" onclick="closeMenu()">Контакты</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#calculator" onclick="closeMenu()">Калькулятор</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#signup"
+                            onclick="openBookingModal(); closeMenu();">Записаться</a></li>
+                </ul>
+            </nav>
+
+            <!-- Оверлей для мобильного меню -->
+            <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+            <!-- Основное содержимое -->
+            <main class="col-md-9 content">
+                <!-- Приветственный раздел -->
+                <section id="welcome">
+                    <h1>Салон красоты в Туле «Элегантность»</h1>
+                    <p>Мы создаем красоту и уверенность в себе для каждого клиента. Профессиональные мастера,
+                        качественные материалы и индивидуальный подход - вот что отличает наш салон.</p>
+                    <div class="highlight">
+                        <h3>Акция месяца!</h3>
+                        <p>При первом посещении - скидка 20% на любую услугу. Запишитесь онлайн и получите
+                            дополнительный подарок!</p>
+                        <button class="btn btn-primary mt-3" onclick="openBookingModal()">Записаться онлайн</button>
+                    </div>
+                </section>
+
+                <!-- Новости -->
+                <section id="news">
+                    <h2>Новости и акции</h2>
+                    <p><a href="novosti.html">Все новости и акции</a></p>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="news-item">
+                                <img src="https://avatars.mds.yandex.net/i?id=7b827a20dbd151e1366c8586ebb61ee187c64d23-16420753-images-thumbs&n=13"
+                                    alt="Новая коллекция">
+                                <div class="news-content">
+                                    <div class="news-date">20 августа 2025</div>
+                                    <h3>"Шелковый блеск"</h3>
+                                    <p>Представляем новую уникальную технику мелирования.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="news-item">
+                                <img src="https://avatars.mds.yandex.net/i?id=ad628294d389472a05909a92e97beef57413aed5-4599985-images-thumbs&n=13"
+                                    alt="Мастер-класс">
+                                <div class="news-content">
+                                    <div class="news-date">10 августа 2025</div>
+                                    <h3>Бесплатный мастер-класс</h3>
+                                    <p>30 августа приглашаем на мастер-класс "Вечерний макияж за 30 минут".</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="news-item">
+                                <img src="https://i.pinimg.com/originals/75/9c/40/759c409943decbb8a0f1f3ee84041918.jpg"
+                                    alt="Обновление прайса">
+                                <div class="news-content">
+                                    <div class="news-date">5 сентября 2025</div>
+                                    <h3>Обновление прайса</h3>
+                                    <p>С июня мы обновили список услуг и добавили специальные программы.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Услуги -->
+                <section id="services">
+                    <h2>Наши услуги</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3><a href="strizhka.html">Парикмахерские услуги</a></h3>
+                            <ul>
+                                <li><a href="strizhka.html">Женские и мужские стрижки</a></li>
+                                <li><a href="okrashivanie.html">Окрашивание любой сложности</a></li>
+                                <li>Укладки и прически</li>
+                                <li>Лечение и восстановление волос</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h3><a href="kosmetologiya.html">Косметология</a></h3>
+                            <ul>
+                                <li>Чистка лица</li>
+                                <li>Уходовые процедуры</li>
+                                <li>Аппаратная косметология</li>
+                                <li>Пилинги</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Ногтевой сервис</h3>
+                            <ul>
+                                <li><a href="manikyur.html">Маникюр</a></li>
+                                <li><a href="pedikyur.html">Педикюр</a></li>
+                                <li>Наращивание ногтей</li>
+                                <li>Дизайн ногтей</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h3><a href="makiyazh.html">Макияж</a></h3>
+                            <ul>
+                                <li>Дневной макияж</li>
+                                <li>Вечерний макияж</li>
+                                <li>Свадебный макияж</li>
+                                <li>Обучение макияжу</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Цены -->
+                <section id="prices">
+                    <h2>Наши цены</h2>
+                    <p><a href="ceny.html">Полный прайс-лист</a></p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Услуга</th>
+                                    <th>Описание</th>
+                                    <th>Цена</th>
+                                    <th>Запись</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Женская стрижка</td>
+                                    <td>Стрижка, мытье, укладка</td>
+                                    <td>1500 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('haircut')">Записаться</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Мужская стрижка</td>
+                                    <td>Стрижка, оформление бороды</td>
+                                    <td>800 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('haircut')">Записаться</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Окрашивание волос</td>
+                                    <td>Стойкое окрашивание</td>
+                                    <td>2500 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('coloring')">Записаться</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Маникюр</td>
+                                    <td>Аппаратный маникюр</td>
+                                    <td>1200 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('manicure')">Записаться</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Педикюр</td>
+                                    <td>Комплексный уход</td>
+                                    <td>1800 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('pedicure')">Записаться</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Чистка лица</td>
+                                    <td>Механическая чистка</td>
+                                    <td>2200 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('cosmetology')">Записаться</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Макияж</td>
+                                    <td>Профессиональный макияж</td>
+                                    <td>1500 ₽</td>
+                                    <td><button class="btn btn-sm btn-outline-primary"
+                                            onclick="openBookingModal('makeup')">Записаться</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Мастера -->
+                <section id="masters">
+                    <h2>Наши мастера</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="master-card">
+                                <img src="https://avatars.mds.yandex.net/i?id=509d24b42909ee3543551954b47766b4ecfd3939-4335694-images-thumbs&n=13"
+                                    alt="Татьяна" class="master-photo">
+                                <div class="master-info">
+                                    <h3>Татьяна</h3>
+                                    <p class="master-specialty">Стилист-парикмахер</p>
+                                    <p class="master-experience">Стаж: 12 лет</p>
+                                    <p class="master-services">Услуги: стрижки, окрашивание, укладки</p>
+                                    <div class="master-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-value">4.9</span>
+                                    </div>
+                                    <button class="btn btn-primary mt-2"
+                                        onclick="openBookingModal('', 'tatyana')">Записаться к Татьяне</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="master-card">
+                                <img src="https://avatars.mds.yandex.net/i?id=54aaa8ede4053a0ccbe1050780c972cb94f3dd2a-5869591-images-thumbs&n=13"
+                                    alt="Ольга" class="master-photo">
+                                <div class="master-info">
+                                    <h3>Ольга</h3>
+                                    <p class="master-specialty">Косметолог</p>
+                                    <p class="master-experience">Стаж: 8 лет</p>
+                                    <p class="master-services">Услуги: чистка лица, уходовые процедуры, пилинги</p>
+                                    <div class="master-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-value">4.8</span>
+                                    </div>
+                                    <button class="btn btn-primary mt-2"
+                                        onclick="openBookingModal('cosmetology', 'olga')">Записаться к Ольге</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="master-card">
+                                <img src="https://avatars.mds.yandex.net/i?id=bfe1ad88443b4ae6c856973c139cb9f756e26f2a-16795535-images-thumbs&n=13"
+                                    alt="Анна" class="master-photo">
+                                <div class="master-info">
+                                    <h3>Анна</h3>
+                                    <p class="master-specialty">Мастер маникюра</p>
+                                    <p class="master-experience">Стаж: 6 лет</p>
+                                    <p class="master-services">Услуги: маникюр, педикюр, дизайн ногтей</p>
+                                    <div class="master-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-value">4.7</span>
+                                    </div>
+                                    <button class="btn btn-primary mt-2"
+                                        onclick="openBookingModal('manicure', 'anna')">Записаться к Анне</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="master-card">
+                                <img src="https://avatars.mds.yandex.net/i?id=be873b139f357bfdbc0177ea78569b4b9e5571fd-5693717-images-thumbs&n=13"
+                                    alt="Лилия" class="master-photo">
+                                <div class="master-info">
+                                    <h3>Лилия</h3>
+                                    <p class="master-specialty">Парикмахер универсал</p>
+                                    <p class="master-experience">Стаж: 9 лет</p>
+                                    <p class="master-services">Услуги: женские и мужские стрижки, окрашивание</p>
+                                    <div class="master-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-value">4.9</span>
+                                    </div>
+                                    <button class="btn btn-primary mt-2"
+                                        onclick="openBookingModal('', 'lilia')">Записаться к Лилии</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Калькулятор стоимости -->
+                <section id="calculator" class="calculator-section">
+                    <div class="calculator-header">
+                        <h2><i class="fas fa-calculator me-2"></i>Калькулятор стоимости услуг</h2>
+                        <p>Рассчитайте стоимость вашего визита и сразу переходите к записи</p>
+                    </div>
+                    <div class="calculator-card">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <!-- Выбор пола -->
+                                <div class="gender-selection mb-4">
+                                    <div class="gender-option selected" onclick="selectGender('female')"
+                                        id="genderFemale">
+                                        <div class="gender-icon">
+                                            <i class="fas fa-venus"></i>
+                                        </div>
+                                        <div class="gender-text">Женские услуги</div>
+                                    </div>
+                                    <div class="gender-option" onclick="selectGender('male')" id="genderMale">
+                                        <div class="gender-icon">
+                                            <i class="fas fa-mars"></i>
+                                        </div>
+                                        <div class="gender-text">Мужские услуги</div>
+                                    </div>
+                                </div>
+
+                                <!-- Женские услуги -->
+                                <div class="gender-specific-services active" id="femaleServices">
+                                    <div class="service-category">
+                                        <h4>Парикмахерские услуги</h4>
+                                        <div class="service-option" data-service="female_haircut" data-price="1500"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Женская стрижка</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">1500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_bangs" data-price="300"
+                                            data-duration="15">
+                                            <div class="service-info">
+                                                <div class="service-name">Стрижка челки</div>
+                                                <div class="service-duration">15 минут</div>
+                                            </div>
+                                            <div class="service-price">300 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_coloring" data-price="2500"
+                                            data-duration="120">
+                                            <div class="service-info">
+                                                <div class="service-name">Окрашивание волос</div>
+                                                <div class="service-duration">2 часа</div>
+                                            </div>
+                                            <div class="service-price">2500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_highlights" data-price="3000"
+                                            data-duration="150">
+                                            <div class="service-info">
+                                                <div class="service-name">Мелирование</div>
+                                                <div class="service-duration">2.5 часа</div>
+                                            </div>
+                                            <div class="service-price">3000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_toning" data-price="1200"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Тонирование</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">1200 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_styling" data-price="800"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Укладка</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">800 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_evening" data-price="2000"
+                                            data-duration="90">
+                                            <div class="service-info">
+                                                <div class="service-name">Вечерняя прическа</div>
+                                                <div class="service-duration">1.5 часа</div>
+                                            </div>
+                                            <div class="service-price">2000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_complex_coloring"
+                                            data-price="4500" data-duration="180">
+                                            <div class="service-info">
+                                                <div class="service-name">Сложное окрашивание</div>
+                                                <div class="service-duration">3 часа</div>
+                                            </div>
+                                            <div class="service-price">4500 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Уход за лицом</h4>
+                                        <div class="service-option" data-service="female_facial_cleaning"
+                                            data-price="2000" data-duration="90">
+                                            <div class="service-info">
+                                                <div class="service-name">Чистка лица</div>
+                                                <div class="service-duration">1.5 часа</div>
+                                            </div>
+                                            <div class="service-price">2000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_facial_care" data-price="2500"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Уходовая процедура</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">2500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_peeling" data-price="1500"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Пилинг</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">1500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_facial_massage"
+                                            data-price="1800" data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Массаж лица</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">1800 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_ultrasound" data-price="3000"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Ультразвуковая чистка</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">3000 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Маникюр и педикюр</h4>
+                                        <div class="service-option" data-service="female_manicure" data-price="1200"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Маникюр</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">1200 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_pedicure" data-price="1500"
+                                            data-duration="75">
+                                            <div class="service-info">
+                                                <div class="service-name">Педикюр</div>
+                                                <div class="service-duration">1 час 15 минут</div>
+                                            </div>
+                                            <div class="service-price">1500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_gel" data-price="800"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Покрытие гель-лаком</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">800 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_nail_ext" data-price="3000"
+                                            data-duration="120">
+                                            <div class="service-info">
+                                                <div class="service-name">Наращивание ногтей</div>
+                                                <div class="service-duration">2 часа</div>
+                                            </div>
+                                            <div class="service-price">3000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_nail_design" data-price="500"
+                                            data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Дизайн ногтей</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">500 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Косметология</h4>
+                                        <div class="service-option" data-service="female_consultation" data-price="500"
+                                            data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Консультация косметолога</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_biorev" data-price="5000"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Биоревитализация</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">5000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_botox" data-price="4000"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Ботокс</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">4000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_plasma" data-price="3500"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Плазмолифтинг</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">3500 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Макияж</h4>
+                                        <div class="service-option" data-service="female_day_makeup" data-price="1500"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Дневной макияж</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">1500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_evening_makeup"
+                                            data-price="2500" data-duration="90">
+                                            <div class="service-info">
+                                                <div class="service-name">Вечерний макияж</div>
+                                                <div class="service-duration">1.5 часа</div>
+                                            </div>
+                                            <div class="service-price">2500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="female_wedding_makeup"
+                                            data-price="4000" data-duration="120">
+                                            <div class="service-info">
+                                                <div class="service-name">Свадебный макияж</div>
+                                                <div class="service-duration">2 часа</div>
+                                            </div>
+                                            <div class="service-price">4000 ₽</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Мужские услуги -->
+                                <div class="gender-specific-services" id="maleServices">
+                                    <div class="service-category">
+                                        <h4>Парикмахерские услуги</h4>
+                                        <div class="service-option" data-service="male_haircut" data-price="800"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Мужская стрижка</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">800 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_machine_cut" data-price="500"
+                                            data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Стрижка машинкой</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_haircut_beard" data-price="1200"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Стрижка + борода</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">1200 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_beard_trim" data-price="600"
+                                            data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Оформление бороды</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">600 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_gray_cover" data-price="1000"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Камуфляж седины</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">1000 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Уход за лицом</h4>
+                                        <div class="service-option" data-service="male_facial_cleaning"
+                                            data-price="1800" data-duration="75">
+                                            <div class="service-info">
+                                                <div class="service-name">Мужская чистка лица</div>
+                                                <div class="service-duration">1 час 15 минут</div>
+                                            </div>
+                                            <div class="service-price">1800 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_peeling" data-price="1200"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Мужской пилинг</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">1200 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_after_shave" data-price="1000"
+                                            data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Уход за кожей после бритья</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">1000 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Барберинг</h4>
+                                        <div class="service-option" data-service="male_classic_shave" data-price="1500"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Классическое бритье</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">1500 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_royal_shave" data-price="2000"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Королевское бритье</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">2000 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_waxing" data-price="800"
+                                            data-duration="30">
+                                            <div class="service-info">
+                                                <div class="service-name">Восковая депиляция</div>
+                                                <div class="service-duration">30 минут</div>
+                                            </div>
+                                            <div class="service-price">800 ₽</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="service-category">
+                                        <h4>Маникюр</h4>
+                                        <div class="service-option" data-service="male_manicure" data-price="800"
+                                            data-duration="45">
+                                            <div class="service-info">
+                                                <div class="service-name">Мужской маникюр</div>
+                                                <div class="service-duration">45 минут</div>
+                                            </div>
+                                            <div class="service-price">800 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_pedicure" data-price="1200"
+                                            data-duration="60">
+                                            <div class="service-info">
+                                                <div class="service-name">Мужской педикюр</div>
+                                                <div class="service-duration">60 минут</div>
+                                            </div>
+                                            <div class="service-price">1200 ₽</div>
+                                        </div>
+                                        <div class="service-option" data-service="male_skin_treatment" data-price="400"
+                                            data-duration="20">
+                                            <div class="service-info">
+                                                <div class="service-name">Обработка кожи</div>
+                                                <div class="service-duration">20 минут</div>
+                                            </div>
+                                            <div class="service-price">400 ₽</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="calculator-result" id="calculatorResult">
+                                    <h4>Итоговая стоимость:</h4>
+                                    <div class="total-price" id="totalPrice">0 ₽</div>
+                                    <div class="selected-services-list" id="selectedServicesList">
+                                        <!-- Список выбранных услуг -->
+                                    </div>
+                                    <div class="calculator-actions">
+                                        <button class="btn btn-light w-100" onclick="resetCalculator()">
+                                            <i class="fas fa-redo me-2"></i>Сбросить
+                                        </button>
+                                        <button class="btn btn-primary w-90" onclick="proceedToBooking()">
+                                            <i class="fas fa-calendar-plus me-2"></i>Записаться
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4">
+                                    <button class="btn btn-primary btn-lg" onclick="calculateTotal()" id="calculateBtn">
+                                        <i class="fas fa-calculator me-2"></i>Рассчитать стоимость
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Запись -->
+                <section id="signup">
+                    <h2>Записаться онлайн</h2>
+                    <div class="booking-cta">
+                        <p>Выберите удобное время и мастера для записи</p>
+                        <button class="btn btn-primary btn-lg" onclick="openBookingModal()">Открыть расписание</button>
+                    </div>
+                </section>
+                <!-- Игра "Собери набор для ухода" с исправленной логикой -->
+                <section id="simple-beauty-game" class="game-section">
+                    <h2><i class="fas fa-gamepad me-2"></i>Игра "Собери 3 одинаковых"</h2>
+                    <p class="game-description">Соберите 3 одинаковых средства в одной прокрутке и получите скидку 5% на
+                        косметику!</p>
+
+                    <div class="game-container">
+                        <!-- Информация о попытках -->
+                        <div class="attempts-info">
+                            <div class="info-card">
+                                <i class="fas fa-redo"></i>
+                                <div>
+                                    <strong>Попытки сегодня:</strong>
+                                    <div id="attemptsInfo">0/3 использовано</div>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <i class="fas fa-sync"></i>
+                                <div>
+                                    <strong>Прокрутки в попытке:</strong>
+                                    <div id="spinsInfo">0/3 осталось</div>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <i class="fas fa-hourglass-half"></i>
+                                <div>
+                                    <strong>Следующая попытка:</strong>
+                                    <div id="nextAttemptInfo">Доступно сейчас</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Игровое поле -->
+                        <div class="game-board">
+                            <div class="slots-container">
+                                <div class="slot" id="slot1">
+                                    <div class="slot-placeholder">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </div>
+                                <div class="slot" id="slot2">
+                                    <div class="slot-placeholder">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </div>
+                                <div class="slot" id="slot3">
+                                    <div class="slot-placeholder">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="spin-result mt-3" id="spinResult" style="display: none;">
+                                <div class="alert" id="spinResultAlert">
+                                    <!-- Результат прокрутки будет здесь -->
+                                </div>
+                            </div>
+
+                            <div class="game-controls">
+                                <button id="spinButton" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-play"></i> Сделать прокрутку
+                                </button>
+                                <button id="finishAttemptButton" class="btn btn-success" disabled>
+                                    <i class="fas fa-check"></i> Завершить попытку
+                                </button>
+                            </div>
+
+                            <div class="attempt-stats mt-3">
+                                <h5>Текущая попытка:</h5>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <span>Прокрутки:</span>
+                                        <strong id="currentSpins">0/3</strong>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Выигрыши:</span>
+                                        <strong id="currentWins">0</strong>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span>Лучший результат:</span>
+                                        <strong id="bestResult">-</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Результат попытки -->
+                        <div class="attempt-result" id="attemptResult" style="display: none;">
+                            <div class="result-content">
+                                <h3 id="attemptResultTitle"></h3>
+                                <p id="attemptResultMessage"></p>
+
+                                <div class="discount-card" id="discountCard" style="display: none;">
+                                    <h4><i class="fas fa-gift"></i> Ваша скидка!</h4>
+                                    <div class="discount-amount">5%</div>
+                                    <p>на покупку косметики в нашем салоне</p>
+                                    <div class="discount-code">
+                                        Код: <code id="discountCode">XXXX-XXXX</code>
+                                    </div>
+                                    <button id="useDiscount" class="btn btn-success mt-3">
+                                        <i class="fas fa-shopping-cart"></i> Использовать скидку
+                                    </button>
+                                    <small class="text-muted d-block mt-2">Действует 14 дней</small>
+                                </div>
+
+                                <div class="next-attempt-timer mt-3" id="nextAttemptTimer" style="display: none;">
+                                    <div class="timer-display">
+                                        <i class="fas fa-clock"></i>
+                                        <div>
+                                            <strong>Следующая попытка через:</strong>
+                                            <div class="timer" id="timerDisplay">03:00:00</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Правила игры -->
+                        <div class="game-rules">
+                            <h5><i class="fas fa-info-circle"></i> Правила игры:</h5>
+                            <ul>
+                                <li>🎰 <strong>1 прокрутка = 3 слота</strong> - все 3 слота крутятся одновременно</li>
+                                <li>🎯 <strong>Выигрыш в прокрутке</strong> - если все 3 слота показывают одинаковое
+                                    средство</li>
+                                <li>🔄 <strong>1 попытка = 3 прокрутки</strong> - в одной попытке можно сделать 3
+                                    прокрутки</li>
+                                <li>⏰ <strong>3 часа между попытками</strong> - после завершения попытки ждите 3 часа
+                                </li>
+                                <li>📅 <strong>3 попытки в день</strong> - максимум 3 попытки за 24 часа</li>
+                                <li>🎁 <strong>Приз</strong> - скидка 5% на косметику за выигрыш в любой прокрутке</li>
+                            </ul>
+                        </div>
+
+                        <!-- История сегодняшних попыток -->
+                        <div class="today-history" id="todayHistory" style="display: none;">
+                            <h5><i class="fas fa-history"></i> Сегодняшние попытки:</h5>
+                            <div class="history-container" id="historyContainer">
+                                <!-- История будет добавлена здесь -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <style>
+                    /* Основные стили игры */
+                    .game-section {
+                        background: linear-gradient(135deg, #f9f5ff 0%, #fff0f9 100%);
+                        padding: 50px 0;
+                        margin: 40px 0;
+                        border-radius: 20px;
+                        border: 3px solid #e0d0e8;
+                    }
+
+                    .game-description {
+                        color: #725172;
+                        font-size: 1.1em;
+                        margin-bottom: 30px;
+                        text-align: center;
+                        font-weight: 500;
+                    }
+
+                    .game-container {
+                        max-width: 900px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 15px;
+                        padding: 30px;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                        border: 1px solid #e8e0e5;
+                    }
+
+                    /* Информация о попытках */
+                    .attempts-info {
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                        margin-bottom: 25px;
+                        flex-wrap: wrap;
+                    }
+
+                    .info-card {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        background: #f9f5fa;
+                        padding: 15px 20px;
+                        border-radius: 12px;
+                        border: 2px solid #e0d0e8;
+                        min-width: 220px;
+                    }
+
+                    .info-card i {
+                        font-size: 1.8em;
+                        color: #8a6fa8;
+                    }
+
+                    /* Игровое поле */
+                    .game-board {
+                        text-align: center;
+                        margin-bottom: 30px;
+                    }
+
+                    .slots-container {
+                        display: flex;
+                        justify-content: center;
+                        gap: 20px;
+                        margin: 30px 0;
+                    }
+
+                    .slot {
+                        width: 120px;
+                        height: 120px;
+                        background: #f9f5fa;
+                        border: 3px solid #d8c3e0;
+                        border-radius: 15px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .slot-placeholder {
+                        font-size: 3em;
+                        color: #d8c3e0;
+                    }
+
+                    .slot.spinning {
+                        animation: spin 0.5s infinite;
+                        border-color: #8a6fa8;
+                        background: linear-gradient(45deg, #f9f5fa, #f0ebf5);
+                    }
+
+                    .slot.win {
+                        border-color: #4CAF50;
+                        box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+                        animation: pulseWin 2s infinite;
+                    }
+
+                    /* Иконки продуктов */
+                    .product-icon {
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 2em;
+                        color: white;
+                        animation: popIn 0.5s ease;
+                    }
+
+                    .cream {
+                        background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+                    }
+
+                    .serum {
+                        background: linear-gradient(135deg, #87CEEB, #4169E1);
+                    }
+
+                    .mask {
+                        background: linear-gradient(135deg, #98FB98, #32CD32);
+                    }
+
+                    .toner {
+                        background: linear-gradient(135deg, #E6E6FA, #9370DB);
+                    }
+
+                    .scrub {
+                        background: linear-gradient(135deg, #F0E68C, #DAA520);
+                    }
+
+                    /* Результат прокрутки */
+                    .spin-result {
+                        min-height: 60px;
+                    }
+
+                    .spin-result .alert {
+                        padding: 15px;
+                        border-radius: 10px;
+                        margin: 0 auto;
+                        max-width: 500px;
+                    }
+
+                    .alert-success {
+                        background-color: #d4edda;
+                        border-color: #c3e6cb;
+                        color: #155724;
+                    }
+
+                    .alert-info {
+                        background-color: #d1ecf1;
+                        border-color: #bee5eb;
+                        color: #0c5460;
+                    }
+
+                    /* Управление */
+                    .game-controls {
+                        display: flex;
+                        justify-content: center;
+                        gap: 15px;
+                        margin: 25px 0;
+                    }
+
+                    #spinButton {
+                        padding: 12px 30px;
+                        font-size: 1.1em;
+                        border-radius: 25px;
+                        background: linear-gradient(135deg, #8a6fa8, #725172);
+                        border: none;
+                        transition: all 0.3s;
+                        min-width: 200px;
+                    }
+
+                    #spinButton:hover:not(:disabled) {
+                        transform: translateY(-3px);
+                        box-shadow: 0 7px 20px rgba(138, 111, 168, 0.3);
+                    }
+
+                    #spinButton:disabled {
+                        opacity: 0.6;
+                        cursor: not-allowed;
+                        background: #cccccc;
+                    }
+
+                    #finishAttemptButton {
+                        padding: 12px 30px;
+                        border-radius: 25px;
+                        min-width: 200px;
+                    }
+
+                    #finishAttemptButton:disabled {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+                    }
+
+                    /* Статистика текущей попытки */
+                    .attempt-stats {
+                        background: #f9f5fa;
+                        padding: 15px;
+                        border-radius: 10px;
+                        border: 2px solid #e0d0e8;
+                    }
+
+                    .stats-grid {
+                        display: flex;
+                        justify-content: center;
+                        gap: 30px;
+                        margin-top: 10px;
+                        flex-wrap: wrap;
+                    }
+
+                    .stat-item {
+                        text-align: center;
+                        min-width: 120px;
+                    }
+
+                    .stat-item span {
+                        display: block;
+                        color: #666;
+                        font-size: 0.9em;
+                        margin-bottom: 5px;
+                    }
+
+                    .stat-item strong {
+                        font-size: 1.2em;
+                        color: #725172;
+                    }
+
+                    /* Результат попытки */
+                    .attempt-result {
+                        background: #f9f5fa;
+                        padding: 30px;
+                        border-radius: 15px;
+                        border: 2px solid #e0d0e8;
+                        margin-top: 30px;
+                        animation: fadeIn 0.5s ease;
+                    }
+
+                    .result-content {
+                        text-align: center;
+                    }
+
+                    .discount-card {
+                        background: white;
+                        padding: 25px;
+                        border-radius: 15px;
+                        border: 3px solid #8a6fa8;
+                        margin: 25px 0;
+                        box-shadow: 0 10px 20px rgba(138, 111, 168, 0.1);
+                    }
+
+                    .discount-amount {
+                        font-size: 4em;
+                        font-weight: bold;
+                        color: #8a6fa8;
+                        font-family: 'Cormorant Garamond', serif;
+                        margin: 15px 0;
+                    }
+
+                    .discount-code {
+                        background: #f0ebf5;
+                        padding: 12px;
+                        border-radius: 8px;
+                        font-size: 1.2em;
+                        margin: 15px 0;
+                        border: 2px dashed #8a6fa8;
+                    }
+
+                    .discount-code code {
+                        font-family: monospace;
+                        font-weight: bold;
+                        letter-spacing: 2px;
+                        color: #725172;
+                    }
+
+                    /* Таймер следующей попытки */
+                    .next-attempt-timer {
+                        background: white;
+                        padding: 20px;
+                        border-radius: 10px;
+                        border: 2px solid #ff9800;
+                    }
+
+                    .timer-display {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 15px;
+                    }
+
+                    .timer-display i {
+                        font-size: 2.5em;
+                        color: #ff9800;
+                    }
+
+                    .timer {
+                        font-size: 2em;
+                        font-weight: bold;
+                        color: #ff5722;
+                        font-family: monospace;
+                        letter-spacing: 2px;
+                    }
+
+                    /* Правила игры */
+                    .game-rules {
+                        background: #f9f5fa;
+                        padding: 20px;
+                        border-radius: 15px;
+                        border: 2px solid #e0d0e8;
+                        margin-top: 25px;
+                    }
+
+                    .game-rules ul {
+                        list-style: none;
+                        padding-left: 0;
+                        margin-bottom: 0;
+                    }
+
+                    .game-rules li {
+                        padding: 8px 0;
+                        border-bottom: 1px solid #e0d0e8;
+                        font-size: 0.95em;
+                    }
+
+                    .game-rules li:last-child {
+                        border-bottom: none;
+                    }
+
+                    /* История */
+                    .today-history {
+                        background: #f9f5fa;
+                        padding: 20px;
+                        border-radius: 15px;
+                        border: 2px solid #e0d0e8;
+                        margin-top: 25px;
+                    }
+
+                    .history-container {
+                        max-height: 200px;
+                        overflow-y: auto;
+                        margin-top: 15px;
+                    }
+
+                    .history-item {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 10px 15px;
+                        background: white;
+                        margin-bottom: 8px;
+                        border-radius: 8px;
+                        border: 1px solid #e0d0e8;
+                    }
+
+                    .history-item.win {
+                        border-left: 4px solid #4CAF50;
+                    }
+
+                    .history-item.lose {
+                        border-left: 4px solid #f44336;
+                    }
+
+                    /* Анимации */
+                    @keyframes spin {
+                        0% {
+                            transform: rotate(0deg);
+                        }
+
+                        100% {
+                            transform: rotate(360deg);
+                        }
+                    }
+
+                    @keyframes fadeIn {
+                        from {
+                            opacity: 0;
+                            transform: translateY(20px);
+                        }
+
+                        to {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+
+                    @keyframes popIn {
+                        0% {
+                            transform: scale(0);
+                            opacity: 0;
+                        }
+
+                        70% {
+                            transform: scale(1.1);
+                        }
+
+                        100% {
+                            transform: scale(1);
+                            opacity: 1;
+                        }
+                    }
+
+                    @keyframes pulseWin {
+                        0% {
+                            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4);
+                        }
+
+                        70% {
+                            box-shadow: 0 0 0 15px rgba(76, 175, 80, 0);
+                        }
+
+                        100% {
+                            box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+                        }
+                    }
+
+                    @keyframes confetti {
+                        0% {
+                            transform: translateY(0) rotate(0deg);
+                            opacity: 1;
+                        }
+
+                        100% {
+                            transform: translateY(100px) rotate(360deg);
+                            opacity: 0;
+                        }
+                    }
+
+                    .confetti {
+                        position: absolute;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        animation: confetti 1s ease-out forwards;
+                    }
+
+                    /* Адаптивность */
+                    @media (max-width: 768px) {
+                        .attempts-info {
+                            flex-direction: column;
+                            align-items: center;
+                        }
+
+                        .info-card {
+                            width: 100%;
+                            max-width: 350px;
+                        }
+
+                        .slots-container {
+                            gap: 10px;
+                        }
+
+                        .slot {
+                            width: 90px;
+                            height: 90px;
+                        }
+
+                        .product-icon {
+                            width: 50px;
+                            height: 50px;
+                            font-size: 1.5em;
+                        }
+
+                        .game-controls {
+                            flex-direction: column;
+                            align-items: center;
+                        }
+
+                        .game-controls button {
+                            width: 100%;
+                            max-width: 300px;
+                        }
+
+                        .stats-grid {
+                            gap: 15px;
+                        }
+
+                        .stat-item {
+                            min-width: 100px;
+                        }
+                    }
+
+                    @media (max-width: 480px) {
+                        .slot {
+                            width: 80px;
+                            height: 80px;
+                        }
+
+                        .game-rules li {
+                            font-size: 0.85em;
+                        }
+
+                        .info-card {
+                            min-width: auto;
+                            padding: 12px 15px;
+                        }
+
+                        .timer-display {
+                            flex-direction: column;
+                            text-align: center;
+                        }
+                    }
+                </style>
+
+                <script>
+                    // Использование jQuery - игровая логика
+
+                    $(document).ready(function () {
+                        // 1. Инициализация игры
+                        initGame();
+
+                        // 2. Инициализация обработчиков событий
+                        initEventHandlers();
+                    });
+
+                    // Глобальные переменные
+                    let gameState = {
+                        attemptsToday: 0, // Использованные попытки сегодня (0-3)
+                        maxAttemptsPerDay: 3, // Максимум попыток в день
+                        spinsInCurrentAttempt: 0, // Прокрутки в текущей попытке (0-3)
+                        maxSpinsPerAttempt: 3, // Максимум прокруток в попытке
+                        winsInCurrentAttempt: 0, // Выигрыши в текущей попытке
+                        bestResultInCurrentAttempt: 0, // Лучший результат в текущей попытке
+                        currentAttemptResults: [], // Результаты каждой прокрутки в текущей попытке
+                        lastAttemptEndTime: null, // Время окончания последней попытки
+                        nextAttemptAvailableTime: null, // Время доступности следующей попытки
+                        dailyResetTime: null, // Время сброса попыток (полночь)
+                        gameActive: true, // Активна ли игра сейчас
+                        todayHistory: [] // История сегодняшних попыток
+                    };
+
+                    // Продукты для игры
+                    const products = [
+                        { id: 'cream', name: 'Крем', icon: 'fas fa-pump-soap', class: 'cream' },
+                        { id: 'serum', name: 'Сыворотка', icon: 'fas fa-tint', class: 'serum' },
+                        { id: 'mask', name: 'Маска', icon: 'fas fa-spa', class: 'mask' },
+                        { id: 'toner', name: 'Тонер', icon: 'fas fa-wind', class: 'toner' },
+                        { id: 'scrub', name: 'Скраб', icon: 'fas fa-seedling', class: 'scrub' }
+                    ];
+
+                    // 1. Инициализация игры
+                    function initGame() {
+                        loadGameState();
+                        updateUI();
+                        startDailyCheck();
+                    }
+
+                    // 2. Загрузка состояния игры
+                    function loadGameState() {
+                        try {
+                            const savedState = localStorage.getItem('beautyGameFinalState');
+                            const today = getTodayDate();
+
+                            if (savedState) {
+                                const parsed = JSON.parse(savedState);
+
+                                // Проверяем, не сменился ли день
+                                if (parsed.lastPlayDate !== today) {
+                                    // Новый день - сбрасываем все
+                                    resetDailyState();
+                                    showNotification('Новый день! У вас 3 новые попытки!', 'info');
+                                } else {
+                                    // Загружаем сохраненное состояние
+                                    $.extend(gameState, parsed);
+
+                                    // Восстанавливаем объекты Date
+                                    if (gameState.lastAttemptEndTime) {
+                                        gameState.lastAttemptEndTime = new Date(gameState.lastAttemptEndTime);
+                                    }
+                                    if (gameState.nextAttemptAvailableTime) {
+                                        gameState.nextAttemptAvailableTime = new Date(gameState.nextAttemptAvailableTime);
+                                    }
+                                    if (gameState.dailyResetTime) {
+                                        gameState.dailyResetTime = new Date(gameState.dailyResetTime);
+                                    }
+
+                                    // Проверяем, не прошло ли время ожидания
+                                    const now = new Date();
+                                    if (gameState.nextAttemptAvailableTime && now >= gameState.nextAttemptAvailableTime) {
+                                        gameState.nextAttemptAvailableTime = null;
+                                    }
+                                }
+                            } else {
+                                // Первый запуск
+                                resetDailyState();
+                            }
+
+                            // Сохраняем дату последней игры
+                            gameState.lastPlayDate = today;
+
+                            // Сохраняем состояние
+                            saveGameState();
+
+                        } catch (error) {
+                            console.error('Ошибка загрузки:', error);
+                            resetDailyState();
+                        }
+                    }
+
+                    // 3. Сброс ежедневного состояния
+                    function resetDailyState() {
+                        gameState.attemptsToday = 0;
+                        gameState.spinsInCurrentAttempt = 0;
+                        gameState.winsInCurrentAttempt = 0;
+                        gameState.bestResultInCurrentAttempt = 0;
+                        gameState.currentAttemptResults = [];
+                        gameState.lastAttemptEndTime = null;
+                        gameState.nextAttemptAvailableTime = null;
+                        gameState.dailyResetTime = getNextMidnight();
+                        gameState.gameActive = true;
+                        gameState.todayHistory = [];
+                    }
+
+                    // 4. Сохранение состояния игры
+                    function saveGameState() {
+                        try {
+                            const stateToSave = {
+                                attemptsToday: gameState.attemptsToday,
+                                spinsInCurrentAttempt: gameState.spinsInCurrentAttempt,
+                                winsInCurrentAttempt: gameState.winsInCurrentAttempt,
+                                bestResultInCurrentAttempt: gameState.bestResultInCurrentAttempt,
+                                currentAttemptResults: gameState.currentAttemptResults,
+                                lastAttemptEndTime: gameState.lastAttemptEndTime,
+                                nextAttemptAvailableTime: gameState.nextAttemptAvailableTime,
+                                dailyResetTime: gameState.dailyResetTime,
+                                lastPlayDate: gameState.lastPlayDate,
+                                gameActive: gameState.gameActive,
+                                todayHistory: gameState.todayHistory
+                            };
+
+                            localStorage.setItem('beautyGameFinalState', JSON.stringify(stateToSave));
+
+                        } catch (error) {
+                            console.error('Ошибка сохранения:', error);
+                        }
+                    }
+
+                    // 5. Обновление интерфейса
+                    function updateUI() {
+                        // Обновляем информацию о попытках
+                        $('#attemptsInfo').text(`${gameState.attemptsToday}/${gameState.maxAttemptsPerDay} использовано`);
+                        $('#spinsInfo').text(`${gameState.maxSpinsPerAttempt - gameState.spinsInCurrentAttempt}/${gameState.maxSpinsPerAttempt} осталось`);
+
+                        // Обновляем статистику текущей попытки
+                        $('#currentSpins').text(`${gameState.spinsInCurrentAttempt}/${gameState.maxSpinsPerAttempt}`);
+                        $('#currentWins').text(gameState.winsInCurrentAttempt);
+
+                        let bestResultText = '-';
+                        if (gameState.bestResultInCurrentAttempt === 3) {
+                            bestResultText = '3 одинаковых! 🎉';
+                        } else if (gameState.bestResultInCurrentAttempt === 2) {
+                            bestResultText = '2 одинаковых';
+                        } else if (gameState.bestResultInCurrentAttempt === 1) {
+                            bestResultText = 'Все разные';
+                        }
+                        $('#bestResult').text(bestResultText);
+
+                        // Обновляем информацию о следующей попытке
+                        updateNextAttemptInfo();
+
+                        // Обновляем кнопки
+                        updateButtons();
+
+                        // Обновляем историю
+                        updateHistory();
+
+                        // Проверяем состояние игры
+                        checkGameState();
+                    }
+
+                    // 6. Обновление информации о следующей попытке
+                    function updateNextAttemptInfo() {
+                        const now = new Date();
+                        const nextAttemptInfo = $('#nextAttemptInfo');
+
+                        if (gameState.attemptsToday >= gameState.maxAttemptsPerDay) {
+                            // Все попытки использованы
+                            const timeUntilReset = gameState.dailyResetTime - now;
+                            if (timeUntilReset > 0) {
+                                nextAttemptInfo.html(`Завтра в 00:00<br><small>(${formatTimeRemaining(timeUntilReset)})</small>`);
+                            } else {
+                                nextAttemptInfo.text('Доступно сейчас');
+                            }
+                        } else if (gameState.nextAttemptAvailableTime && now < gameState.nextAttemptAvailableTime) {
+                            // Ожидание между попытками
+                            const timeUntilNext = gameState.nextAttemptAvailableTime - now;
+                            nextAttemptInfo.html(`Через ${formatTimeRemaining(timeUntilNext)}<br><small>(${formatTime(gameState.nextAttemptAvailableTime)})</small>`);
+                        } else {
+                            // Доступно сейчас
+                            nextAttemptInfo.text('Доступно сейчас');
+                        }
+                    }
+
+                    // 7. Обновление кнопок
+                    function updateButtons() {
+                        const spinButton = $('#spinButton');
+                        const finishButton = $('#finishAttemptButton');
+                        const now = new Date();
+
+                        // Проверяем, можно ли играть
+                        let canPlay = gameState.gameActive;
+
+                        if (gameState.attemptsToday >= gameState.maxAttemptsPerDay) {
+                            canPlay = false;
+                        } else if (gameState.nextAttemptAvailableTime && now < gameState.nextAttemptAvailableTime) {
+                            canPlay = false;
+                        } else if (gameState.spinsInCurrentAttempt >= gameState.maxSpinsPerAttempt) {
+                            canPlay = false;
+                        }
+
+                        // Обновляем кнопку прокрутки
+                        if (canPlay) {
+                            const spinsLeft = gameState.maxSpinsPerAttempt - gameState.spinsInCurrentAttempt;
+                            spinButton.prop('disabled', false)
+                                .html(`<i class="fas fa-play"></i> Сделать прокрутку (${spinsLeft} осталось)`);
+                        } else {
+                            spinButton.prop('disabled', true)
+                                .html('<i class="fas fa-clock"></i> Недоступно');
+                        }
+
+                        // Обновляем кнопку завершения попытки
+                        if (gameState.spinsInCurrentAttempt > 0 && gameState.spinsInCurrentAttempt <= gameState.maxSpinsPerAttempt) {
+                            finishButton.prop('disabled', false);
+                        } else {
+                            finishButton.prop('disabled', true);
+                        }
+                    }
+
+                    // 8. Обновление истории
+                    function updateHistory() {
+                        const historyContainer = $('#historyContainer');
+                        const todayHistory = $('#todayHistory');
+
+                        if (gameState.todayHistory.length > 0) {
+                            historyContainer.empty();
+
+                            // Показываем попытки в обратном порядке (последние первые)
+                            const reversedHistory = [...gameState.todayHistory].reverse();
+
+                            reversedHistory.forEach((attempt, index) => {
+                                const attemptNumber = gameState.todayHistory.length - index;
+                                const time = new Date(attempt.endTime).toLocaleTimeString('ru-RU', {
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                });
+
+                                const resultClass = attempt.wonDiscount ? 'win' : 'lose';
+                                const resultIcon = attempt.wonDiscount ?
+                                    '<i class="fas fa-trophy text-success me-2"></i>' :
+                                    '<i class="fas fa-times-circle text-danger me-2"></i>';
+
+                                const resultText = attempt.wonDiscount ?
+                                    'Выигрыш! 🎉' :
+                                    `Лучший результат: ${attempt.bestResult} из 3`;
+
+                                const historyItem = $(`
+                <div class="history-item ${resultClass}">
+                    <div>
+                        <strong>Попытка ${attemptNumber} (${time})</strong>
+                        <div><small>${resultText}</small></div>
+                    </div>
+                    <div>${resultIcon}</div>
+                </div>
+            `);
+
+                                historyContainer.append(historyItem);
+                            });
+
+                            todayHistory.show();
+                        } else {
+                            todayHistory.hide();
+                        }
+                    }
+
+                    // 9. Проверка состояния игры
+                    function checkGameState() {
+                        const now = new Date();
+
+                        // Проверяем сброс дня
+                        if (now >= gameState.dailyResetTime) {
+                            resetDailyState();
+                            saveGameState();
+                            updateUI();
+                            showNotification('Новый день! У вас 3 новые попытки!', 'info');
+                            return;
+                        }
+
+                        // Проверяем, можно ли начать новую попытку
+                        if (gameState.nextAttemptAvailableTime && now >= gameState.nextAttemptAvailableTime) {
+                            gameState.nextAttemptAvailableTime = null;
+                        }
+
+                        // Определяем, активна ли игра
+                        gameState.gameActive = (
+                            gameState.attemptsToday < gameState.maxAttemptsPerDay && // Не исчерпали лимит попыток
+                            (!gameState.nextAttemptAvailableTime || now >= gameState.nextAttemptAvailableTime) && // Прошло ли время ожидания
+                            gameState.spinsInCurrentAttempt < gameState.maxSpinsPerAttempt // Не исчерпали лимит прокруток
+                        );
+                    }
+
+                    // 10. Сделать прокрутку
+                    function makeSpin() {
+                        if (!gameState.gameActive) {
+                            showNotification('Игра неактивна. Дождитесь следующей попытки.', 'warning');
+                            return;
+                        }
+
+                        if (gameState.spinsInCurrentAttempt >= gameState.maxSpinsPerAttempt) {
+                            showNotification('Вы использовали все 3 прокрутки в этой попытке.', 'info');
+                            return;
+                        }
+
+                        // Увеличиваем счетчик прокруток
+                        gameState.spinsInCurrentAttempt++;
+
+                        // jQuery: Показываем анимацию вращения
+                        $('#slot1, #slot2, #slot3').addClass('spinning');
+                        $('#spinButton').prop('disabled', true).html('<i class="fas fa-sync fa-spin"></i> Крутим...');
+
+                        // Генерируем случайные продукты для каждого слота
+                        const spinResults = [];
+                        for (let i = 0; i < 3; i++) {
+                            const randomIndex = Math.floor(Math.random() * products.length);
+                            spinResults.push(products[randomIndex]);
+                        }
+
+                        // Проверяем результат прокрутки
+                        const sameCount = checkSpinResult(spinResults);
+
+                        // Сохраняем результат прокрутки
+                        const spinResult = {
+                            time: new Date(),
+                            results: spinResults,
+                            sameCount: sameCount,
+                            isWin: sameCount === 3
+                        };
+
+                        gameState.currentAttemptResults.push(spinResult);
+
+                        // Обновляем лучший результат в текущей попытке
+                        if (sameCount > gameState.bestResultInCurrentAttempt) {
+                            gameState.bestResultInCurrentAttempt = sameCount;
+                        }
+
+                        // Если выигрыш (3 одинаковых)
+                        if (sameCount === 3) {
+                            gameState.winsInCurrentAttempt++;
+                        }
+
+                        // Останавливаем слоты через 1 секунду
+                        setTimeout(function () {
+                            stopSlots(spinResults, spinResult);
+                        }, 1000);
+
+                        // Сохраняем состояние
+                        saveGameState();
+                    }
+
+                    // 11. Проверка результата прокрутки
+                    function checkSpinResult(results) {
+                        // Считаем сколько одинаковых продуктов
+                        const counts = {};
+                        results.forEach(product => {
+                            counts[product.id] = (counts[product.id] || 0) + 1;
+                        });
+
+                        // Находим максимальное количество одинаковых
+                        return Math.max(...Object.values(counts));
+                    }
+
+                    // 12. Остановка слотов
+                    function stopSlots(results, spinResult) {
+                        // jQuery: Убираем анимацию вращения
+                        $('#slot1, #slot2, #slot3').removeClass('spinning');
+
+                        // jQuery: Заполняем слоты результатами
+                        $('#slot1').html(`<div class="product-icon ${results[0].class}"><i class="${results[0].icon}"></i></div>`);
+                        $('#slot2').html(`<div class="product-icon ${results[1].class}"><i class="${results[1].icon}"></i></div>`);
+                        $('#slot3').html(`<div class="product-icon ${results[2].class}"><i class="${results[2].icon}"></i></div>`);
+
+                        // Если выигрыш - подсвечиваем слоты
+                        if (spinResult.isWin) {
+                            $('#slot1, #slot2, #slot3').addClass('win');
+                            createConfetti();
+                        }
+
+                        // Показываем результат прокрутки
+                        showSpinResult(spinResult);
+
+                        // Обновляем UI
+                        updateUI();
+                    }
+
+                    // 13. Показать результат прокрутки
+                    function showSpinResult(spinResult) {
+                        const spinResultElement = $('#spinResult');
+                        const spinResultAlert = $('#spinResultAlert');
+
+                        if (spinResult.isWin) {
+                            // ВЫИГРЫШ!
+                            spinResultAlert.removeClass('alert-info').addClass('alert-success')
+                                .html(`<i class="fas fa-trophy"></i> <strong>Поздравляем!</strong> Вы собрали 3 одинаковых средства <strong>${spinResult.results[0].name}</strong>! 🎉`);
+                        } else if (spinResult.sameCount === 2) {
+                            // 2 одинаковых
+                            spinResultAlert.removeClass('alert-success').addClass('alert-info')
+                                .html(`<i class="fas fa-star"></i> <strong>Хорошо!</strong> Вы собрали 2 одинаковых средства! Попробуйте еще раз!`);
+                        } else {
+                            // Все разные
+                            spinResultAlert.removeClass('alert-success').addClass('alert-info')
+                                .html(`<i class="fas fa-redo"></i> <strong>Попробуйте еще!</strong> Все средства разные. У вас еще ${gameState.maxSpinsPerAttempt - gameState.spinsInCurrentAttempt} прокруток в этой попытке.`);
+                        }
+
+                        spinResultElement.slideDown();
+
+                        // Скрываем результат через 3 секунды
+                        setTimeout(function () {
+                            spinResultElement.slideUp();
+                        }, 3000);
+                    }
+
+                    // 14. Завершить попытку
+                    function finishAttempt() {
+                        if (gameState.spinsInCurrentAttempt === 0) {
+                            showNotification('Сначала сделайте хотя бы одну прокрутку!', 'warning');
+                            return;
+                        }
+
+                        // Проверяем, выиграли ли скидку в этой попытке
+                        const wonDiscount = gameState.winsInCurrentAttempt > 0;
+
+                        // Сохраняем попытку в историю
+                        const attemptRecord = {
+                            startTime: gameState.currentAttemptResults[0]?.time || new Date(),
+                            endTime: new Date(),
+                            spins: gameState.spinsInCurrentAttempt,
+                            wins: gameState.winsInCurrentAttempt,
+                            bestResult: gameState.bestResultInCurrentAttempt,
+                            wonDiscount: wonDiscount,
+                            results: [...gameState.currentAttemptResults]
+                        };
+
+                        gameState.todayHistory.push(attemptRecord);
+
+                        // Увеличиваем счетчик попыток
+                        gameState.attemptsToday++;
+
+                        // Устанавливаем время следующей попытки (через 3 часа)
+                        const now = new Date();
+                        gameState.lastAttemptEndTime = now;
+                        gameState.nextAttemptAvailableTime = new Date(now.getTime() + 3 * 60 * 60 * 1000);
+
+                        // Сбрасываем текущую попытку
+                        gameState.spinsInCurrentAttempt = 0;
+                        gameState.winsInCurrentAttempt = 0;
+                        gameState.bestResultInCurrentAttempt = 0;
+                        gameState.currentAttemptResults = [];
+
+                        // Сохраняем состояние
+                        saveGameState();
+
+                        // Показываем результат попытки
+                        showAttemptResult(attemptRecord);
+
+                        // Обновляем UI
+                        updateUI();
+                    }
+
+                    // 15. Показать результат попытки
+                    function showAttemptResult(attemptRecord) {
+                        const attemptResultElement = $('#attemptResult');
+                        const attemptResultTitle = $('#attemptResultTitle');
+                        const attemptResultMessage = $('#attemptResultMessage');
+                        const discountCard = $('#discountCard');
+                        const nextAttemptTimer = $('#nextAttemptTimer');
+
+                        // jQuery: Скрываем все элементы
+                        discountCard.hide();
+                        nextAttemptTimer.hide();
+
+                        if (attemptRecord.wonDiscount) {
+                            // ВЫИГРАЛИ СКИДКУ!
+                            // Генерируем код скидки
+                            const discountCode = generateDiscountCode();
+                            $('#discountCode').text(discountCode);
+
+                            // jQuery: Обновляем текст
+                            attemptResultTitle.html('<i class="fas fa-trophy text-warning"></i> Поздравляем!');
+                            attemptResultMessage.html(`Вы выиграли скидку 5% на косметику! В этой попытке у вас было <strong>${attemptRecord.wins} выигрышных прокруток</strong> из ${attemptRecord.spins}.`);
+
+                            // Показываем скидку
+                            discountCard.show();
+
+                            // Сохраняем скидку
+                            saveDiscount(discountCode);
+
+                        } else {
+                            // НЕ ВЫИГРАЛИ
+                            attemptResultTitle.html('<i class="fas fa-heart text-secondary"></i> Попытка завершена');
+                            attemptResultMessage.html(`Вы сделали <strong>${attemptRecord.spins} прокруток</strong>. Лучший результат: <strong>${attemptRecord.bestResult} одинаковых средства</strong>. Попробуйте еще раз через 3 часа!`);
+
+                            // Показываем таймер следующей попытки
+                            nextAttemptTimer.show();
+                            startNextAttemptTimer();
+                        }
+
+                        // jQuery: Показываем результат
+                        attemptResultElement.slideDown();
+                    }
+
+                    // 16. Таймер следующей попытки
+                    function startNextAttemptTimer() {
+                        if (!gameState.nextAttemptAvailableTime) return;
+
+                        const timerDisplay = $('#timerDisplay');
+                        const timerElement = $('#nextAttemptTimer');
+
+                        function updateTimer() {
+                            const now = new Date();
+                            const timeLeft = gameState.nextAttemptAvailableTime - now;
+
+                            if (timeLeft <= 0) {
+                                timerDisplay.text('00:00:00');
+                                timerElement.hide();
+                                clearInterval(timerInterval);
+                                gameState.gameActive = true;
+                                updateUI();
+                                return;
+                            }
+
+                            const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                            timerDisplay.text(
+                                `${hours.toString().padStart(2, '0')}:` +
+                                `${minutes.toString().padStart(2, '0')}:` +
+                                `${seconds.toString().padStart(2, '0')}`
+                            );
+                        }
+
+                        updateTimer();
+                        const timerInterval = setInterval(updateTimer, 1000);
+                    }
+
+                    // 17. Создание конфетти
+                    function createConfetti() {
+                        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'];
+
+                        for (let i = 0; i < 50; i++) {
+                            // jQuery: Создаем элемент конфетти
+                            const confetti = $('<div class="confetti"></div>');
+
+                            const color = colors[Math.floor(Math.random() * colors.length)];
+                            const left = Math.random() * 100;
+                            const size = Math.random() * 10 + 5;
+                            const duration = Math.random() * 1 + 0.5;
+                            const delay = Math.random() * 0.5;
+
+                            // jQuery: Применяем стили
+                            confetti.css({
+                                background: color,
+                                left: `${left}%`,
+                                width: `${size}px`,
+                                height: `${size}px`,
+                                animationDuration: `${duration}s`,
+                                animationDelay: `${delay}s`
+                            });
+
+                            // jQuery: Добавляем на страницу
+                            $('.game-board').append(confetti);
+
+                            // Удаляем через 1.5 секунды
+                            setTimeout(function () {
+                                confetti.remove();
+                            }, 1500);
+                        }
+                    }
+
+                    // 18. Вспомогательные функции
+                    function getTodayDate() {
+                        return new Date().toISOString().split('T')[0];
+                    }
+
+                    function getNextMidnight() {
+                        const now = new Date();
+                        const midnight = new Date(now);
+                        midnight.setHours(24, 0, 0, 0);
+                        return midnight;
+                    }
+
+                    function formatTime(date) {
+                        return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    }
+
+                    function formatTimeRemaining(ms) {
+                        const hours = Math.floor(ms / (1000 * 60 * 60));
+                        const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+
+                        if (hours > 0) {
+                            return `${hours} ч ${minutes} мин`;
+                        } else {
+                            return `${minutes} мин`;
+                        }
+                    }
+
+                    function generateDiscountCode() {
+                        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+                        let code = '';
+                        for (let i = 0; i < 6; i++) {
+                            code += chars.charAt(Math.floor(Math.random() * chars.length));
+                            if (i === 2) code += '-';
+                        }
+                        return code;
+                    }
+
+                    function saveDiscount(code) {
+                        try {
+                            const discounts = JSON.parse(localStorage.getItem('beautySalonDiscounts') || '[]');
+
+                            discounts.push({
+                                code: code,
+                                discount: 5,
+                                date: new Date().toISOString(),
+                                game: 'Собери 3 одинаковых',
+                                validUntil: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+                            });
+
+                            localStorage.setItem('beautySalonDiscounts', JSON.stringify(discounts));
+
+                        } catch (error) {
+                            console.error('Ошибка сохранения скидки:', error);
+                        }
+                    }
+
+                    // 19. Уведомления
+                    function showNotification(message, type) {
+                        // jQuery: Создаем уведомление
+                        const notification = $(`
+        <div class="notification" style="
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 15px 20px;
+            background: ${type === 'success' ? '#4CAF50' :
+                                type === 'error' ? '#f44336' :
+                                    type === 'warning' ? '#ff9800' : '#2196F3'};
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        ">
+            <i class="fas fa-${type === 'success' ? 'check' :
+                                type === 'error' ? 'times' : 'info'}-circle me-2"></i>
+            ${message}
+        </div>
+    `);
+
+                        // jQuery: Добавляем на страницу
+                        $('body').append(notification);
+
+                        // Анимация появления
+                        setTimeout(function () {
+                            notification.css('transform', 'translateX(0)');
+                        }, 10);
+
+                        // Удаление через 3 секунды
+                        setTimeout(function () {
+                            notification.css('transform', 'translateX(150%)');
+                            setTimeout(function () {
+                                notification.remove();
+                            }, 300);
+                        }, 3000);
+                    }
+
+                    // 20. Ежедневная проверка
+                    function startDailyCheck() {
+                        setInterval(function () {
+                            checkGameState();
+                            updateUI();
+                        }, 1000);
+                    }
+
+                    // 21. Инициализация обработчиков событий
+                    function initEventHandlers() {
+                        // Кнопка "Сделать прокрутку"
+                        $('#spinButton').click(function () {
+                            makeSpin();
+                        });
+
+                        // Кнопка "Завершить попытку"
+                        $('#finishAttemptButton').click(function () {
+                            finishAttempt();
+                        });
+
+                        // Кнопка "Использовать скидку"
+                        $('#useDiscount').click(function () {
+                            useDiscount();
+                        });
+
+                        // Горячая клавиша Пробел для прокрутки
+                        $(document).keypress(function (e) {
+                            if (e.which === 32 && gameState.gameActive) { // Пробел
+                                e.preventDefault();
+                                makeSpin();
+                            }
+                        });
+                    }
+
+                    // 22. Функция использования скидки
+                    function useDiscount() {
+                        const code = $('#discountCode').text();
+
+                        // jQuery: Создаем модальное окно
+                        const modalHTML = `
+        <div class="modal fade" id="discountModal">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="fas fa-gift text-success"></i> Ваша скидка!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="display-4 text-primary mb-3">5%</div>
+                        <h4>на косметику</h4>
+                        <div class="alert alert-info mt-3">
+                            <h6><i class="fas fa-key"></i> Ваш код:</h6>
+                            <div class="fs-2 fw-bold">${code}</div>
+                            <small>Покажите этот код при покупке косметики</small>
+                        </div>
+                        <p class="text-muted mt-3">
+                            <i class="fas fa-calendar-alt"></i> Действует 14 дней
+                        </p>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary" onclick="openBookingModal()" data-bs-dismiss="modal">
+                            <i class="fas fa-shopping-cart"></i> Записаться на консультацию
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+                        // jQuery: Добавляем модальное окно
+                        $('body').append(modalHTML);
+
+                        // Показываем модальное окно
+                        const discountModal = new bootstrap.Modal($('#discountModal')[0]);
+                        discountModal.show();
+
+                        // Удаляем модальное окно после закрытия
+                        $('#discountModal').on('hidden.bs.modal', function () {
+                            $(this).remove();
+                        });
+                    }
+                </script>
+            </main>
+        </div>
+    </div>
+
+    <!-- Модальное окно записи -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">Запись на услугу</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bookingForm">
+                        <!-- Шаг 1: Выбор услуги и мастера -->
+                        <div id="step1" class="booking-step active">
+                            <h6>Шаг 1: Выберите услугу и мастера</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="serviceType" class="form-label">Услуга *</label>
+                                    <select class="form-select" id="serviceType" name="serviceType" required>
+                                        <option value="">Выберите услугу</option>
+                                        <!-- Услуги будут заполнены динамически -->
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="masterSelect" class="form-label">Мастер *</label>
+                                    <select class="form-select" id="masterSelect" name="masterSelect" required>
+                                        <option value="">Выберите мастера</option>
+                                        <option value="tatyana">Татьяна (парикмахер)</option>
+                                        <option value="olga">Ольга (косметолог)</option>
+                                        <option value="anna">Анна (маникюр)</option>
+                                        <option value="lilia">Лилия (парикмахер)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <button type="button" class="btn btn-primary" onclick="showStep(2)">Далее</button>
+                            </div>
+                        </div>
+
+                        <!-- Шаг 2: Выбор даты и времени -->
+                        <div id="step2" class="booking-step">
+                            <h6>Шаг 2: Выберите дату и время</h6>
+                            <!-- Календарь -->
+                            <div class="mb-3">
+                                <label class="form-label">Выберите дату *</label>
+                                <div id="datePicker" class="date-picker"></div>
+                            </div>
+                            <!-- Доступное время -->
+                            <div class="mb-3">
+                                <label class="form-label">Доступное время *</label>
+                                <div id="timeSlots" class="time-slots">
+                                    <div class="text-center py-3">
+                                        <p class="text-muted">Выберите дату для просмотра доступного времени</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary"
+                                    onclick="showStep(1)">Назад</button>
+                                <button type="button" class="btn btn-primary" onclick="showStep(3)">Далее</button>
+                            </div>
+                        </div>
+
+                        <!-- Шаг 3: Контактные данные -->
+                        <div id="step3" class="booking-step">
+                            <h6>Шаг 3: Ваши контактные данные</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="clientName" class="form-label">Ваше имя *</label>
+                                    <input type="text" class="form-control" id="clientName" name="clientName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="clientPhone" class="form-label">Телефон *</label>
+                                    <input type="tel" class="form-control" id="clientPhone" name="clientPhone" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="clientEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="clientEmail" name="clientEmail">
+                            </div>
+                            <div class="mb-3">
+                                <label for="clientComment" class="form-label">Комментарий к записи</label>
+                                <textarea class="form-control" id="clientComment" name="clientComment" rows="3"
+                                    placeholder="Дополнительные пожелания..."></textarea>
+                            </div>
+                            <!-- Сводка записи -->
+                            <div class="booking-summary card mb-3">
+                                <div class="card-body">
+                                    <h6>Сводка записи:</h6>
+                                    <div id="bookingSummary"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary"
+                                    onclick="showStep(2)">Назад</button>
+                                <button type="submit" class="btn btn-success">Подтвердить запись</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал сайта -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Салон красоты "Элегантность". Все права защищены.</p>
+            <p>Адрес: г. Тула, ул. Бондаренко, д. 25 | Телефон: +7 (961) 265-35-25</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
+    <script>
+        // Данные для калькулятора
+        const calculatorState = {
+            selectedServices: [],
+            totalPrice: 0,
+            totalDuration: 0,
+            selectedGender: 'female'
+        };
+
+        // Данные услуг для онлайн-записи
+        const bookingServices = {
+            female: [
+                { id: 'female_haircut', name: 'Женская стрижка', price: 1500, duration: 60 },
+                { id: 'female_bangs', name: 'Стрижка челки', price: 300, duration: 15 },
+                { id: 'female_coloring', name: 'Окрашивание волос', price: 2500, duration: 120 },
+                { id: 'female_highlights', name: 'Мелирование', price: 3000, duration: 150 },
+                { id: 'female_toning', name: 'Тонирование', price: 1200, duration: 45 },
+                { id: 'female_styling', name: 'Укладка', price: 800, duration: 45 },
+                { id: 'female_evening', name: 'Вечерняя прическа', price: 2000, duration: 90 },
+                { id: 'female_complex_coloring', name: 'Сложное окрашивание', price: 4500, duration: 180 },
+                { id: 'female_facial_cleaning', name: 'Чистка лица', price: 2000, duration: 90 },
+                { id: 'female_facial_care', name: 'Уходовая процедура', price: 2500, duration: 60 },
+                { id: 'female_peeling', name: 'Пилинг', price: 1500, duration: 45 },
+                { id: 'female_facial_massage', name: 'Массаж лица', price: 1800, duration: 30 },
+                { id: 'female_ultrasound', name: 'Ультразвуковая чистка', price: 3000, duration: 60 },
+                { id: 'female_manicure', name: 'Маникюр', price: 1200, duration: 60 },
+                { id: 'female_pedicure', name: 'Педикюр', price: 1500, duration: 75 },
+                { id: 'female_gel', name: 'Покрытие гель-лаком', price: 800, duration: 45 },
+                { id: 'female_nail_ext', name: 'Наращивание ногтей', price: 3000, duration: 120 },
+                { id: 'female_nail_design', name: 'Дизайн ногтей', price: 500, duration: 30 },
+                { id: 'female_consultation', name: 'Консультация косметолога', price: 500, duration: 30 },
+                { id: 'female_biorev', name: 'Биоревитализация', price: 5000, duration: 60 },
+                { id: 'female_botox', name: 'Ботокс', price: 4000, duration: 45 },
+                { id: 'female_plasma', name: 'Плазмолифтинг', price: 3500, duration: 60 },
+                { id: 'female_day_makeup', name: 'Дневной макияж', price: 1500, duration: 60 },
+                { id: 'female_evening_makeup', name: 'Вечерний макияж', price: 2500, duration: 90 },
+                { id: 'female_wedding_makeup', name: 'Свадебный макияж', price: 4000, duration: 120 }
+            ],
+            male: [
+                { id: 'male_haircut', name: 'Мужская стрижка', price: 800, duration: 45 },
+                { id: 'male_machine_cut', name: 'Стрижка машинкой', price: 500, duration: 30 },
+                { id: 'male_haircut_beard', name: 'Стрижка + борода', price: 1200, duration: 60 },
+                { id: 'male_beard_trim', name: 'Оформление бороды', price: 600, duration: 30 },
+                { id: 'male_gray_cover', name: 'Камуфляж седины', price: 1000, duration: 45 },
+                { id: 'male_facial_cleaning', name: 'Мужская чистка лица', price: 1800, duration: 75 },
+                { id: 'male_peeling', name: 'Мужской пилинг', price: 1200, duration: 45 },
+                { id: 'male_after_shave', name: 'Уход за кожей после бритья', price: 1000, duration: 30 },
+                { id: 'male_classic_shave', name: 'Классическое бритье', price: 1500, duration: 45 },
+                { id: 'male_royal_shave', name: 'Королевское бритье', price: 2000, duration: 60 },
+                { id: 'male_waxing', name: 'Восковая депиляция', price: 800, duration: 30 },
+                { id: 'male_manicure', name: 'Мужской маникюр', price: 800, duration: 45 },
+                { id: 'male_pedicure', name: 'Мужской педикюр', price: 1200, duration: 60 },
+                { id: 'male_skin_treatment', name: 'Обработка кожи', price: 400, duration: 20 }
+            ]
+        };
+
+        // Данные о мастерах и их расписании
+        const mastersData = {
+            tatyana: {
+                name: "Татьяна",
+                specialty: "Парикмахер",
+                workingHours: {
+                    monday: { start: "09:00", end: "18:00" },
+                    tuesday: { start: "09:00", end: "18:00" },
+                    wednesday: { start: "09:00", end: "18:00" },
+                    thursday: { start: "09:00", end: "18:00" },
+                    friday: { start: "09:00", end: "18:00" },
+                    saturday: { start: "10:00", end: "16:00" },
+                    sunday: null // Выходной
+                },
+                busySlots: []
+            },
+            olga: {
+                name: "Ольга",
+                specialty: "Косметолог",
+                workingHours: {
+                    monday: { start: "10:00", end: "19:00" },
+                    tuesday: { start: "10:00", end: "19:00" },
+                    wednesday: null, // Выходной
+                    thursday: { start: "10:00", end: "19:00" },
+                    friday: { start: "10:00", end: "19:00" },
+                    saturday: { start: "11:00", end: "17:00" },
+                    sunday: null
+                },
+                busySlots: []
+            },
+            anna: {
+                name: "Анна",
+                specialty: "Мастер маникюра",
+                workingHours: {
+                    monday: { start: "09:00", end: "17:00" },
+                    tuesday: { start: "09:00", end: "17:00" },
+                    wednesday: { start: "09:00", end: "17:00" },
+                    thursday: { start: "09:00", end: "17:00" },
+                    friday: { start: "09:00", end: "17:00" },
+                    saturday: { start: "10:00", end: "15:00" },
+                    sunday: null
+                },
+                busySlots: []
+            },
+            lilia: {
+                name: "Лилия",
+                specialty: "Парикмахер",
+                workingHours: {
+                    monday: { start: "08:00", end: "17:00" },
+                    tuesday: { start: "08:00", end: "17:00" },
+                    wednesday: { start: "08:00", end: "17:00" },
+                    thursday: { start: "08:00", end: "17:00" },
+                    friday: { start: "08:00", end: "17:00" },
+                    saturday: null,
+                    sunday: null
+                },
+                busySlots: []
+            }
+        };
+
+        // Текущее состояние записи
+        let currentBooking = {
+            service: '',
+            master: '',
+            date: '',
+            time: '',
+            clientName: '',
+            clientPhone: '',
+            clientEmail: '',
+            comment: ''
+        };
+
+        let flatpickrInstance;
+
+        // Выбор пола в калькуляторе
+        function selectGender(gender) {
+            calculatorState.selectedGender = gender;
+
+            // Обновляем визуальное выделение
+            const femaleOption = document.getElementById('genderFemale');
+            const maleOption = document.getElementById('genderMale');
+            femaleOption.classList.remove('selected');
+            maleOption.classList.remove('selected');
+
+            if (gender === 'female') {
+                femaleOption.classList.add('selected');
+                document.getElementById('femaleServices').classList.add('active');
+                document.getElementById('maleServices').classList.remove('active');
+            } else {
+                maleOption.classList.add('selected');
+                document.getElementById('maleServices').classList.add('active');
+                document.getElementById('femaleServices').classList.remove('active');
+            }
+
+            // Сбрасываем выбранные услуги при смене пола
+            resetCalculator();
+        }
+
+        // Инициализация калькулятора
+        function initCalculator() {
+            // Обработчики для выбора услуг
+            $('.service-option').click(function () {
+                const serviceElement = $(this);
+                const serviceId = serviceElement.data('service');
+                const price = serviceElement.data('price');
+                const duration = serviceElement.data('duration');
+                const serviceName = serviceElement.find('.service-name').text();
+
+                if (serviceElement.hasClass('selected')) {
+                    // Удаляем услугу
+                    serviceElement.removeClass('selected');
+                    calculatorState.selectedServices = calculatorState.selectedServices.filter(service => service.id !== serviceId);
+                } else {
+                    // Добавляем услугу
+                    serviceElement.addClass('selected');
+                    calculatorState.selectedServices.push({
+                        id: serviceId,
+                        name: serviceName,
+                        price: price,
+                        duration: duration
+                    });
+                }
+
+                // Автоматически пересчитываем при изменении выбора
+                calculateTotal();
+            });
+        }
+
+        // Расчет общей стоимости
+        function calculateTotal() {
+            calculatorState.totalPrice = calculatorState.selectedServices.reduce((sum, service) => sum + service.price, 0);
+            calculatorState.totalDuration = calculatorState.selectedServices.reduce((sum, service) => sum + service.duration, 0);
+
+            // Обновляем отображение
+            updateCalculatorDisplay();
+        }
+
+        // Обновление отображения калькулятора
+        function updateCalculatorDisplay() {
+            const totalPriceElement = $('#totalPrice');
+            const servicesListElement = $('#selectedServicesList');
+            const resultElement = $('#calculatorResult');
+            const calculateBtn = $('#calculateBtn');
+
+            if (calculatorState.selectedServices.length > 0) {
+                totalPriceElement.text(calculatorState.totalPrice + ' ₽');
+
+                // Обновляем список услуг
+                servicesListElement.html(`
+                    <div class="mb-2"><strong>Выбранные услуги:</strong></div>
+                    ${calculatorState.selectedServices.map(service => `
+                        <div class="selected-service-item">
+                            <span>${service.name}</span>
+                            <span>${service.price} ₽</span>
+                        </div>
+                    `).join('')}
+                    <div class="selected-service-item mt-2">
+                        <strong>Общее время:</strong>
+                        <strong>${Math.floor(calculatorState.totalDuration / 60)}ч ${calculatorState.totalDuration % 60}мин</strong>
+                    </div>
+                `);
+
+                // Показываем результат
+                resultElement.addClass('show');
+
+                // Обновляем текст кнопки
+                calculateBtn.html('<i class="fas fa-sync-alt me-2"></i>Пересчитать');
+            } else {
+                resultElement.removeClass('show');
+                calculateBtn.html('<i class="fas fa-calculator me-2"></i>Рассчитать стоимость');
+            }
+        }
+
+        // Сброс калькулятора
+        function resetCalculator() {
+            calculatorState.selectedServices = [];
+            calculatorState.totalPrice = 0;
+            calculatorState.totalDuration = 0;
+            $('.service-option').removeClass('selected');
+            updateCalculatorDisplay();
+        }
+
+        // Переход к записи
+        function proceedToBooking() {
+            if (calculatorState.selectedServices.length === 0) {
+                alert('Пожалуйста, выберите хотя бы одну услугу');
+                return;
+            }
+
+            // Сохраняем выбранные услуги для использования в форме записи
+            localStorage.setItem('pendingServices', JSON.stringify({
+                services: calculatorState.selectedServices,
+                gender: calculatorState.selectedGender
+            }));
+
+            // Открываем окно записи
+            openBookingModal();
+
+            setTimeout(() => {
+                alert('Теперь вы можете записаться на выбранные услуги!');
+            }, 500);
+        }
+
+        // Функция для блокировки времени у мастера
+        function blockMasterTime(masterId, date, time) {
+            try {
+                // Получаем текущие данные мастеров из localStorage
+                let mastersData = JSON.parse(localStorage.getItem('mastersData'));
+
+                // Если данных нет, используем начальные данные
+                if (!mastersData) {
+                    mastersData = {
+                        tatyana: { busySlots: [] },
+                        olga: { busySlots: [] },
+                        anna: { busySlots: [] },
+                        lilia: { busySlots: [] }
+                    };
+                }
+
+                // Создаем слот для блокировки
+                const slotToBlock = `${date} ${time}`;
+
+                // Добавляем слот в занятое время мастера
+                if (mastersData[masterId]) {
+                    if (!mastersData[masterId].busySlots) {
+                        mastersData[masterId].busySlots = [];
+                    }
+
+                    // Проверяем, не занято ли уже это время
+                    if (!mastersData[masterId].busySlots.includes(slotToBlock)) {
+                        mastersData[masterId].busySlots.push(slotToBlock);
+
+                        // Сохраняем обновленные данные
+                        localStorage.setItem('mastersData', JSON.stringify(mastersData));
+                        console.log(`Время ${time} ${date} заблокировано у мастера ${masterId}`);
+                        return true;
+                    } else {
+                        console.warn(`Время ${time} ${date} уже занято у мастера ${masterId}`);
+                        return false;
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка при блокировке времени:', error);
+                return false;
+            }
+        }
+
+        // Функция для проверки доступности времени
+        function isTimeSlotAvailable(masterId, date, time) {
+            try {
+                // Получаем данные мастеров из localStorage
+                const mastersData = JSON.parse(localStorage.getItem('mastersData'));
+
+                // Если данных нет, время доступно
+                if (!mastersData || !mastersData[masterId]) {
+                    return true;
+                }
+
+                const master = mastersData[masterId];
+                const slotToCheck = `${date} ${time}`;
+
+                // Проверяем, не занято ли время
+                const isAvailable = !master.busySlots || !master.busySlots.includes(slotToCheck);
+
+                console.log(`Проверка времени: ${slotToCheck}, доступно: ${isAvailable}`);
+                return isAvailable;
+            } catch (error) {
+                console.error('Ошибка при проверке доступности времени:', error);
+                return true;
+            }
+        }
+
+        // Обновление доступного времени с учетом заблокированных слотов
+        function updateAvailableTimes(masterId, date) {
+            const master = mastersData[masterId];
+            const dayOfWeek = new Date(date).getDay();
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const dayName = days[dayOfWeek];
+
+            if (!master.workingHours[dayName]) {
+                document.getElementById('timeSlots').innerHTML = '<div class="text-center py-3"><p class="text-danger">В этот день мастер не работает</p></div>';
+                return;
+            }
+
+            const workDay = master.workingHours[dayName];
+            const timeSlots = generateTimeSlots(workDay.start, workDay.end, 60);
+
+            // Получаем заблокированные слоты из localStorage
+            const localStorageData = JSON.parse(localStorage.getItem('mastersData') || '{}');
+            const masterFromStorage = localStorageData[masterId];
+            const busySlots = masterFromStorage ? (masterFromStorage.busySlots || []) : [];
+
+            let timeSlotsHTML = '<div class="row">';
+            timeSlots.forEach(slot => {
+                const slotToCheck = `${date} ${slot}`;
+                const isBusy = busySlots.includes(slotToCheck);
+                const isDisabled = isBusy;
+
+                timeSlotsHTML += `
+                    <div class="col-4 col-sm-3 mb-2">
+                        <button type="button"
+                            class="btn time-slot-btn ${isDisabled ? 'btn-outline-secondary' : 'btn-outline-primary'} w-100 ${currentBooking.time === slot ? 'active' : ''}"
+                            ${isDisabled ? 'disabled' : ''}
+                            onclick="selectTimeSlot('${slot}')"
+                            title="${isDisabled ? 'Время занято' : 'Выбрать время'}">
+                            ${slot}
+                            ${isDisabled ? '<br><small class="text-muted">занято</small>' : ''}
+                        </button>
+                    </div>
+                `;
+            });
+            timeSlotsHTML += '</div>';
+
+            document.getElementById('timeSlots').innerHTML = timeSlotsHTML;
+        }
+
+        // Открытие модального окна
+        function openBookingModal(service = '', master = '') {
+            resetBookingForm();
+
+            // Заполняем список услуг в зависимости от пола
+            fillServiceOptions();
+
+            if (service) {
+                document.getElementById('serviceType').value = service;
+                currentBooking.service = service;
+            }
+
+            if (master) {
+                document.getElementById('masterSelect').value = master;
+                currentBooking.master = master;
+                updateAvailableDates();
+            }
+
+            const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
+            modal.show();
+            showStep(1);
+        }
+
+        // Заполнение списка услуг для онлайн-записи
+        function fillServiceOptions() {
+            const serviceSelect = document.getElementById('serviceType');
+            serviceSelect.innerHTML = '<option value="">Выберите услугу</option>';
+
+            // Проверяем, есть ли сохраненные услуги из калькулятора
+            const pendingServices = JSON.parse(localStorage.getItem('pendingServices') || '{}');
+            const gender = pendingServices.gender || 'female';
+            const services = bookingServices[gender];
+
+            services.forEach(service => {
+                const option = document.createElement('option');
+                option.value = service.id;
+                option.textContent = `${service.name} - ${service.price} ₽`;
+                serviceSelect.appendChild(option);
+            });
+        }
+
+        // Сброс формы записи
+        function resetBookingForm() {
+            currentBooking = {
+                service: '',
+                master: '',
+                date: '',
+                time: '',
+                clientName: '',
+                clientPhone: '',
+                clientEmail: '',
+                comment: ''
+            };
+
+            document.getElementById('bookingForm').reset();
+            if (flatpickrInstance) {
+                flatpickrInstance.clear();
+            }
+            document.getElementById('timeSlots').innerHTML = '<div class="text-center py-3"><p class="text-muted">Выберите дату для просмотра доступного времени</p></div>';
+        }
+
+        // Переключение шагов
+        function showStep(stepNumber) {
+            // Скрыть все шаги
+            document.querySelectorAll('.booking-step').forEach(step => {
+                step.classList.remove('active');
+            });
+
+            // Показать нужный шаг
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+
+            // Обновить сводку на последнем шаге
+            if (stepNumber === 3) {
+                updateBookingSummary();
+            }
+        }
+
+        // Обновление доступных дат
+        function updateAvailableDates() {
+            const masterSelect = document.getElementById('masterSelect');
+            const selectedMaster = masterSelect.value;
+            if (!selectedMaster) return;
+
+            const master = mastersData[selectedMaster];
+
+            // Инициализация календаря
+            if (flatpickrInstance) {
+                flatpickrInstance.destroy();
+            }
+
+            flatpickrInstance = flatpickr("#datePicker", {
+                locale: "ru",
+                minDate: "today",
+                dateFormat: "Y-m-d",
+                disable: [
+                    function (date) {
+                        const dayOfWeek = date.getDay();
+                        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+                        const dayName = days[dayOfWeek];
+                        return !master.workingHours[dayName];
+                    }
+                ],
+                onChange: function (selectedDates) {
+                    if (selectedDates.length > 0) {
+                        const selectedDate = selectedDates[0];
+                        currentBooking.date = selectedDate.toISOString().split('T')[0];
+                        updateAvailableTimes(selectedMaster, currentBooking.date);
+                    }
+                }
+            });
+        }
+
+        // Генерация временных слотов
+        function generateTimeSlots(start, end, interval) {
+            const slots = [];
+            const startTime = new Date(`2000-01-01 ${start}`);
+            const endTime = new Date(`2000-01-01 ${end}`);
+
+            while (startTime < endTime) {
+                slots.push(startTime.toTimeString().slice(0, 5));
+                startTime.setMinutes(startTime.getMinutes() + interval);
+            }
+
+            return slots;
+        }
+
+        // Выбор временного слота
+        function selectTimeSlot(time) {
+            currentBooking.time = time;
+
+            // Обновить активную кнопку
+            document.querySelectorAll('.time-slot-btn').forEach(btn => {
+                btn.classList.remove('active', 'btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
+
+            event.target.classList.add('active', 'btn-primary');
+            event.target.classList.remove('btn-outline-primary');
+        }
+
+        // Обновление сводки записи
+        function updateBookingSummary() {
+            const master = mastersData[currentBooking.master];
+
+            // Находим информацию об услуге
+            const pendingServices = JSON.parse(localStorage.getItem('pendingServices') || '{}');
+            const gender = pendingServices.gender || 'female';
+            const services = bookingServices[gender];
+            const selectedService = services.find(s => s.id === currentBooking.service);
+
+            const summaryHTML = `
+                <div class="row">
+                    <div class="col-6"><strong>Услуга:</strong></div>
+                    <div class="col-6">${selectedService ? selectedService.name : 'Не выбрана'}</div>
+                    <div class="col-6"><strong>Мастер:</strong></div>
+                    <div class="col-6">${master ? master.name : 'Не выбран'}</div>
+                    <div class="col-6"><strong>Дата:</strong></div>
+                    <div class="col-6">${currentBooking.date || 'Не выбрана'}</div>
+                    <div class="col-6"><strong>Время:</strong></div>
+                    <div class="col-6">${currentBooking.time || 'Не выбрано'}</div>
+                    ${selectedService ? `
+                    <div class="col-6"><strong>Стоимость:</strong></div>
+                    <div class="col-6">${selectedService.price} ₽</div>
+                    <div class="col-6"><strong>Длительность:</strong></div>
+                    <div class="col-6">${Math.floor(selectedService.duration / 60)}ч ${selectedService.duration % 60}мин</div>
+                    ` : ''}
+                </div>
+            `;
+
+            document.getElementById('bookingSummary').innerHTML = summaryHTML;
+        }
+
+        // Функции мобильного меню
+        function toggleMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            initCalculator();
+
+            // Инициализация данных мастеров в localStorage при первом запуске
+            if (!localStorage.getItem('mastersData')) {
+                const initialMastersData = {
+                    tatyana: { busySlots: [] },
+                    olga: { busySlots: [] },
+                    anna: { busySlots: [] },
+                    lilia: { busySlots: [] }
+                };
+                localStorage.setItem('mastersData', JSON.stringify(initialMastersData));
+            }
+
+            // Мобильное меню
+            const menuToggle = document.getElementById('menuToggle');
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuToggle.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+
+            // Обработчики для формы записи
+            document.getElementById('masterSelect').addEventListener('change', function () {
+                currentBooking.master = this.value;
+                updateAvailableDates();
+            });
+
+            document.getElementById('serviceType').addEventListener('change', function () {
+                currentBooking.service = this.value;
+            });
+
+            // Отправка формы
+            document.getElementById('bookingForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Сбор данных
+                currentBooking.clientName = document.getElementById('clientName').value;
+                currentBooking.clientPhone = document.getElementById('clientPhone').value;
+                currentBooking.clientEmail = document.getElementById('clientEmail').value;
+                currentBooking.comment = document.getElementById('clientComment').value;
+
+                // Валидация
+                if (!currentBooking.service || !currentBooking.master || !currentBooking.date || !currentBooking.time) {
+                    alert('Пожалуйста, заполните все обязательные поля');
+                    return;
+                }
+
+                // Блокируем время у мастера
+                const timeBlocked = blockMasterTime(currentBooking.master, currentBooking.date, currentBooking.time);
+
+                if (!timeBlocked) {
+                    alert('Извините, это время стало недоступно. Пожалуйста, выберите другое время.');
+                    updateAvailableTimes(currentBooking.master, currentBooking.date);
+                    return;
+                }
+
+                // Имитация отправки
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Запись...';
+                submitBtn.disabled = true;
+
+                setTimeout(() => {
+                    alert(`Спасибо, ${currentBooking.clientName}! Вы записаны на ${currentBooking.date} в ${currentBooking.time}. Мы свяжемся с вами для подтверждения.`);
+
+                    // Сохраняем запись в личный кабинет пользователя
+                    saveBookingToPersonal(currentBooking);
+
+                    // Очищаем сохраненные услуги из калькулятора
+                    localStorage.removeItem('pendingServices');
+
+                    // Закрыть модальное окно
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+                    modal.hide();
+
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    resetBookingForm();
+                }, 2000);
+            });
+        });
+
+        // Сохранение записи в личный кабинет пользователя
+        function saveBookingToPersonal(bookingData) {
+            try {
+                // Получаем текущего пользователя
+                const currentUser = JSON.parse(localStorage.getItem('beautySalonUser'));
+
+                if (currentUser && currentUser.isLoggedIn) {
+                    // Находим информацию об услуге
+                    const pendingServices = JSON.parse(localStorage.getItem('pendingServices') || '{}');
+                    const gender = pendingServices.gender || 'female';
+                    const services = bookingServices[gender];
+                    const selectedService = services.find(s => s.id === bookingData.service);
+
+                    // Создаем объект записи
+                    const newBooking = {
+                        id: 'booking_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+                        service: bookingData.service,
+                        serviceName: selectedService ? selectedService.name : 'Услуга',
+                        masterId: bookingData.master,
+                        masterName: mastersData[bookingData.master].name,
+                        date: bookingData.date,
+                        time: bookingData.time,
+                        clientName: bookingData.clientName,
+                        clientPhone: bookingData.clientPhone,
+                        clientEmail: bookingData.clientEmail,
+                        comment: bookingData.comment,
+                        status: 'confirmed',
+                        createdAt: new Date().toISOString()
+                    };
+
+                    // Добавляем запись в массив пользователя
+                    if (!currentUser.bookings) {
+                        currentUser.bookings = [];
+                    }
+                    currentUser.bookings.push(newBooking);
+
+                    // Сохраняем обновленные данные пользователя
+                    localStorage.setItem('beautySalonUser', JSON.stringify(currentUser));
+
+                    // Сохраняем в общий список записей
+                    const allBookings = JSON.parse(localStorage.getItem('beautySalonBookings') || '{}');
+                    if (!allBookings[currentUser.phone]) {
+                        allBookings[currentUser.phone] = [];
+                    }
+                    allBookings[currentUser.phone].push(newBooking);
+                    localStorage.setItem('beautySalonBookings', JSON.stringify(allBookings));
+
+                    console.log('Запись сохранена в личный кабинет:', newBooking);
+                }
+            } catch (error) {
+                console.error('Ошибка при сохранении записи в личный кабинет:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

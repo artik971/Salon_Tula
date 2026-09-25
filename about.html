@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас - Салон красоты "Элегантность"</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fdf8f5;
+            color: #4a4a4a;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Шапка сайта */
+        .site-header {
+            background: linear-gradient(135deg, #f8e1e7 0%, #e6e6fa 100%);
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 3px solid #d4af37;
+            margin-bottom: 0;
+        }
+
+        .site-header h1 {
+            color: #725172;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5em;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .site-header p {
+            color: #8b668b;
+            font-size: 1.2em;
+            font-style: italic;
+            margin: 8px 0 0;
+            font-weight: 300;
+        }
+
+        /* Основная структура */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 160px);
+        }
+
+        /* Боковая панель */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(to bottom, #8a6fa8, #725172);
+            padding: 40px 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar .nav {
+            padding: 0 20px;
+        }
+
+        .sidebar .nav-link {
+            color: white;
+            padding: 16px 20px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            margin: 6px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05em;
+            font-weight: 500;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid #d4af37;
+            padding-left: 24px;
+            transform: translateX(5px);
+        }
+
+        /* Основное содержимое */
+        .content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 50px 60px;
+            background: white;
+            min-height: calc(100vh - 160px);
+        }
+
+        /* Стили разделов */
+        section {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            color: #725172;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h3 {
+            color: #8a6fa8;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5em;
+            margin: 35px 0 20px;
+            font-weight: 500;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        /* Изображения */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        img:hover {
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Таблица */
+        .table-responsive {
+            margin: 25px 0;
+        }
+
+        .table {
+            font-size: 1em;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .table th {
+            background-color: #8a6fa8;
+            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1em;
+            padding: 20px;
+            font-weight: 500;
+            border: none;
+        }
+
+        .table td {
+            padding: 18px 20px;
+            border-color: #f0f0f0;
+            vertical-align: middle;
+        }
+
+        /* Форма */
+        .form-control,
+        .form-select {
+            border: 2px solid #e8e0e5;
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #8a6fa8;
+            box-shadow: 0 0 0 3px rgba(138, 111, 168, 0.1);
+            background: white;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #725172;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8a6fa8, #725172);
+            border: none;
+            padding: 16px 40px;
+            font-weight: 500;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #725172, #5a415a);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Подвал */
+        .site-footer {
+            background: linear-gradient(135deg, #725172 0%, #5a415a 100%);
+            color: white;
+            text-align: center;
+            padding: 35px 0;
+            margin-top: 0;
+        }
+
+        .site-footer p {
+            margin: 8px 0;
+            font-size: 1.05em;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Мастера */
+        .master {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+        }
+
+        .master img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            margin-right: 30px;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .master-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .master-info p {
+            margin: 0;
+            color: #666;
+            font-size: 1.05em;
+        }
+
+        /* Списки */
+        ul {
+            padding-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            font-size: 1.05em;
+            color: #666;
+        }
+
+        /* Декоративные элементы */
+        .highlight {
+            background: linear-gradient(120deg, #f8e1e7 0%, #e6e6fa 100%);
+            padding: 35px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 5px solid #8a6fa8;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .highlight h3 {
+            margin-top: 0;
+            color: #725172;
+        }
+
+        /* Стили для интерактивной галереи */
+        .gallery-section {
+            margin-bottom: 30px;
+        }
+
+        .gallery-section h3 {
+            color: #8a6fa8;
+            font-family: 'Cormorant Garamond', serif;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e8e0e5;
+            padding-bottom: 8px;
+        }
+
+        .gallery-row {
+            margin: 0 -10px;
+        }
+
+        .gallery-row .col-md-6 {
+            padding: 0 10px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-img:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-caption {
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        /* Анимация для увеличения изображения */
+        .gallery-img.zoomed {
+            transform: scale(1.3);
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Стили для модального окна галереи */
+        .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        #modalImage {
+            width: 100%;
+            height: auto;
+            border-radius: 0;
+        }
+
+        #modalCaption {
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            background-color: #f8f9fa;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 250px;
+            }
+
+            .content {
+                margin-left: 250px;
+                padding: 40px 50px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 220px;
+            }
+
+            .content {
+                margin-left: 220px;
+                padding: 35px 40px;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 20px 0;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 30px 25px;
+            }
+
+            .site-header h1 {
+                font-size: 2em;
+            }
+
+            .master {
+                flex-direction: column;
+                text-align: center;
+                padding: 25px;
+            }
+
+            .master img {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            section {
+                margin-bottom: 40px;
+                padding-bottom: 30px;
+            }
+
+            .gallery-img {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .content {
+                padding: 25px 20px;
+            }
+
+            .site-header {
+                padding: 25px 0;
+            }
+
+            .site-header h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.7em;
+                margin-bottom: 25px;
+            }
+
+            h3 {
+                font-size: 1.3em;
+                margin: 25px 0 15px;
+            }
+
+            .highlight {
+                padding: 25px;
+            }
+
+            .gallery-img {
+                height: 180px;
+            }
+        }
+
+        /* Стили для мобильного меню */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: linear-gradient(135deg, #8a6fa8, #725172);
+            border: none;
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 5px auto;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(to bottom, #8a6fa8, #725172);
+            z-index: 1002;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 80px 0 40px 0;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu .nav {
+            padding: 0 20px;
+        }
+
+        .mobile-menu .nav-link {
+            color: white;
+            padding: 16px 20px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            margin: 6px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05em;
+            font-weight: 500;
+        }
+
+        .mobile-menu .nav-link:hover,
+        .mobile-menu .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-left: 4px solid #d4af37;
+            padding-left: 24px;
+            transform: translateX(5px);
+        }
+
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            backdrop-filter: blur(5px);
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 80px 25px 30px 25px;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .mobile-menu {
+                width: 100%;
+            }
+
+            .menu-toggle {
+                top: 15px;
+                left: 15px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .content {
+                padding: 70px 20px 25px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <div class="container">
+            <h1>Салон красоты "Элегантность"</h1>
+            <p>Ваша красота - наша профессия</p>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <div class="row">
+            <!-- Вертикальное меню -->
+            <nav class="sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="novosti.html">Новости</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="personal.html">Личный кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Галерея</a></li>
+                </ul>
+            </nav>
+
+            <!-- Кнопка бургер-меню для мобильных -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Мобильное меню -->
+            <nav class="mobile-menu" id="mobileMenu">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="index.html" onclick="closeMenu()">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html" onclick="closeMenu()">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html" onclick="closeMenu()">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="about.html" onclick="closeMenu()">О нас</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="novosti.html" onclick="closeMenu()">Новости</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html" onclick="closeMenu()">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html" onclick="closeMenu()">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html" onclick="closeMenu()">Контакты</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery" onclick="closeMenu()">Галерея</a></li>
+                </ul>
+            </nav>
+
+            <!-- Оверлей для мобильного меню -->
+            <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+            <!-- Основное содержимое -->
+            <main class="col-md-9 content">
+                <section id="history">
+                    <h2>Наша история</h2>
+                    <p>Салон красоты "Элегантность" работает на рынке beauty-услуг с 2019 года. За это время мы
+                        заслужили доверие тысяч клиентов благодаря высокому качеству услуг и профессиональному подходу.
+                    </p>
+                    <div class="text-center my-3">
+                        <img src="https://avatars.mds.yandex.net/i?id=66b925ddeac6975a342d2f76dd73ed35209e8644-5438397-images-thumbs&n=13"
+                            alt="Интерьер нашего салона" class="img-fluid">
+                    </div>
+                    <p>За 6 лет работы из маленького кабинета в центре Тулы мы выросли в современный салон красоты с
+                        полным спектром услуг и командой профессиональных мастеров.</p>
+                </section>
+
+                <section id="principles">
+                    <h2>Наши принципы работы</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li><strong>Качество:</strong> Используем только профессиональную косметику
+                                    премиум-класса</li>
+                                <li><strong>Безопасность:</strong> Строго соблюдаем все санитарные нормы и правила
+                                    стерилизации</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul>
+                                <li><strong>Индивидуальный подход:</strong> Для каждого клиента разрабатываем
+                                    персональную программу ухода</li>
+                                <li><strong>Постоянное развитие:</strong> Наши мастера регулярно проходят обучение и
+                                    повышают квалификацию</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Мастера -->
+                <section id="masters">
+                    <h2>Наша команда</h2>
+                    <div class="masters-column">
+                        <div class="master">
+                            <img src="https://avatars.mds.yandex.net/i?id=509d24b42909ee3543551954b47766b4ecfd3939-4335694-images-thumbs&n=13"
+                                alt="Татьяна">
+                            <div class="master-info">
+                                <h3>Татьяна</h3>
+                                <p>Стилист-парикмахер, стаж 12 лет</p>
+                            </div>
+                        </div>
+                        <div class="master">
+                            <img src="https://avatars.mds.yandex.net/i?id=54aaa8ede4053a0ccbe1050780c972cb94f3dd2a-5869591-images-thumbs&n=13"
+                                alt="Ольга">
+                            <div class="master-info">
+                                <h3>Ольга</h3>
+                                <p>Косметолог, стаж 8 лет</p>
+                            </div>
+                        </div>
+                        <div class="master">
+                            <img src="https://avatars.mds.yandex.net/i?id=bfe1ad88443b4ae6c856973c139cb9f756e26f2a-16795535-images-thumbs&n=13"
+                                alt="Анна">
+                            <div class="master-info">
+                                <h3>Анна</h3>
+                                <p>Мастер маникюра, стаж 6 лет</p>
+                            </div>
+                        </div>
+                        <div class="master">
+                            <img src="https://avatars.mds.yandex.net/i?id=be873b139f357bfdbc0177ea78569b4b9e5571fd-5693717-images-thumbs&n=13"
+                                alt="Мастер Лилия">
+                            <div class="master-info">
+                                <h3>Лилия</h3>
+                                <p>Парикмахер общей практики, стаж 9 лет</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="gallery">
+                    <h2>Галерея наших работ</h2>
+                    <p>Примеры работ наших мастеров:</p>
+                    <div class="gallery-section">
+                        <h3>Парикмахерское искусство</h3>
+                        <div class="row gallery-row">
+                            <div class="col-md-6 mb-4">
+                                <div class="gallery-item">
+                                    <img src="https://i.pinimg.com/736x/5f/8c/b3/5f8cb3bca4bad4e38d0ecd4928036f30.jpg"
+                                        alt="Пример стрижки и окрашивания" class="img-fluid gallery-img"
+                                        data-fullsize="https://i.pinimg.com/736x/5f/8c/b3/5f8cb3bca4bad4e38d0ecd4928036f30.jpg"
+                                        onclick="openImageModal(this)">
+                                    <p class="image-caption">Стрижка и окрашивание от Татьяны</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="gallery-item">
+                                    <img src="https://kosmetikam.com/wp-content/uploads/1/c/d/1cded872fc0d849052ad620ae1a0d59b.jpeg"
+                                        alt="Пример вечерней прически" class="img-fluid gallery-img"
+                                        data-fullsize="https://kosmetikam.com/wp-content/uploads/1/c/d/1cded872fc0d849052ad620ae1a0d59b.jpeg"
+                                        onclick="openImageModal(this)">
+                                    <p class="image-caption">Вечерняя прическа</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-section">
+                        <h3>Маникюр</h3>
+                        <div class="row gallery-row">
+                            <div class="col-md-6 mb-4">
+                                <div class="gallery-item">
+                                    <img src="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_68c6dcff46395d5d54bbf281_68c6dfb946395d5d54bf0d24/scale_1200"
+                                        alt="Пример дизайна ногтей" class="img-fluid gallery-img"
+                                        data-fullsize="https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_68c6dcff46395d5d54bbf281_68c6dfb946395d5d54bf0d24/scale_1200"
+                                        onclick="openImageModal(this)">
+                                    <p class="image-caption">Дизайн ногтей от Анны</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="gallery-item">
+                                    <img src="https://i.pinimg.com/originals/79/ac/32/79ac322c66b3b868d245ca084aff936a.jpg"
+                                        alt="Пример классического маникюра" class="img-fluid gallery-img"
+                                        data-fullsize="https://i.pinimg.com/originals/79/ac/32/79ac322c66b3b868d245ca084aff936a.jpg"
+                                        onclick="openImageModal(this)">
+                                    <p class="image-caption">Классический маникюр</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-section">
+                        <h3>Макияж</h3>
+                        <div class="row gallery-row">
+                            <div class="col-md-6 mb-4">
+                                <div class="gallery-item">
+                                    <img src="https://i.pinimg.com/originals/1c/fd/b2/1cfdb29ce209daa3ff9d4b7f820018dd.jpg"
+                                        alt="Пример свадебного макияжа" class="img-fluid gallery-img"
+                                        data-fullsize="https://i.pinimg.com/originals/1c/fd/b2/1cfdb29ce209daa3ff9d4b7f820018dd.jpg"
+                                        onclick="openImageModal(this)">
+                                    <p class="image-caption">Свадебный макияж</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="gallery-item">
+                                    <img src="https://i.pinimg.com/originals/91/98/f7/9198f7676cd96f7297c0be4252f3adca.jpg"
+                                        alt="Пример вечернего макияжа" class="img-fluid gallery-img"
+                                        data-fullsize="https://i.pinimg.com/originals/91/98/f7/9198f7676cd96f7297c0be4252f3adca.jpg"
+                                        onclick="openImageModal(this)">
+                                    <p class="image-caption">Вечерний макияж</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Модальное окно для просмотра изображения -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="" class="img-fluid">
+                    <p id="modalCaption" class="mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал сайта -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Салон красоты "Элегантность". Все права защищены.</p>
+            <p>Адрес: г. Тула, ул. Бондаренко, д. 25 | Телефон: +7 (961) 265-35-25</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Обработчики для галереи
+        document.addEventListener('DOMContentLoaded', function () {
+            const galleryImages = document.querySelectorAll('.gallery-img');
+
+            // Увеличение при наведении (Вариант А)
+            galleryImages.forEach(img => {
+                img.addEventListener('mouseenter', function () {
+                    this.classList.add('zoomed');
+                });
+
+                img.addEventListener('mouseleave', function () {
+                    this.classList.remove('zoomed');
+                });
+            });
+
+            // Изменение цвета подписи при клике (Вариант А)
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function () {
+                    const caption = this.nextElementSibling; // Следующий элемент после img - это подпись
+                    caption.style.color = '#ffd700'; // Желтый цвет
+                    caption.style.transition = 'color 0.3s ease';
+
+                    // Возврат цвета через 2 секунды
+                    setTimeout(() => {
+                        caption.style.color = '';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Функция для открытия модального окна с изображением
+        function openImageModal(element) {
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+
+            modalImage.src = element.getAttribute('data-fullsize');
+            modalCaption.textContent = element.nextElementSibling.textContent;
+
+            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+            modal.show();
+        }
+
+        // Функции мобильного меню
+        function toggleMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+
+            document.body.style.overflow = '';
+        }
+
+        // Инициализация мобильного меню
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menuToggle');
+            const menuOverlay = document.getElementById('menuOverlay');
+
+            menuToggle.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', closeMenu);
+        });
+    </script>
+</body>
+
+</html>

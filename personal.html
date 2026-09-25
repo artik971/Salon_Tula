@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет - Салон красоты "Элегантность"</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .personal-header {
+            background: linear-gradient(135deg, #f0eff2, #725172);
+            color: rgba(21, 20, 20, 0.534);
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        .user-info-card {
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgb(255, 255, 255);
+        }
+
+        .booking-card {
+            border: 1px solid #e8e0e5;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .booking-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .booking-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .status-confirmed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-completed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .empty-bookings {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .empty-bookings i {
+            font-size: 4em;
+            color: #e8e0e5;
+            margin-bottom: 20px;
+        }
+
+        .cancel-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            border: none;
+            padding: 8px 20px;
+            font-size: 0.9em;
+            color: white;
+            border-radius: 6px;
+        }
+
+        .cancel-btn:hover {
+            background: linear-gradient(135deg, #c82333, #bd2130);
+            transform: translateY(-1px);
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Стили для выбора пола */
+        .gender-selection {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .gender-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #e8e0e5;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .gender-option:hover {
+            border-color: #8a6fa8;
+            transform: translateY(-2px);
+        }
+
+        .gender-option.selected {
+            border-color: #725172;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            box-shadow: 0 3px 10px rgba(114, 81, 114, 0.2);
+        }
+
+        .gender-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #8a6fa8;
+        }
+
+        .gender-option.selected .gender-icon {
+            color: #725172;
+        }
+
+        .gender-text {
+            font-weight: 600;
+            color: #725172;
+        }
+
+        /* Стили для калькулятора */
+        .calculator-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .service-category {
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-weight: 600;
+            color: #725172;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0ebf5;
+        }
+
+        .service-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-checkbox:hover {
+            background: #f9f5fa;
+        }
+
+        .service-checkbox input {
+            margin-right: 10px;
+        }
+
+        .service-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .service-price {
+            color: #8a6fa8;
+            font-weight: 600;
+        }
+
+        .calculator-result {
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .total-price {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #725172;
+            margin: 10px 0;
+        }
+
+        /* Стили для выбора оплаты */
+        .payment-selection {
+            margin: 20px 0;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e8e0e5;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .payment-option:hover {
+            border-color: #8a6fa8;
+        }
+
+        .payment-option.selected {
+            border-color: #725172;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+        }
+
+        .payment-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #8a6fa8;
+            width: 40px;
+            text-align: center;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-title {
+            font-weight: 600;
+            color: #725172;
+            margin-bottom: 5px;
+        }
+
+        .payment-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* Стили для пакетного выбора */
+        .package-selection {
+            margin: 20px 0;
+        }
+
+        .package-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e8e0e5;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .package-option:hover {
+            border-color: #8a6fa8;
+        }
+
+        .package-option.selected {
+            border-color: #725172;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+        }
+
+        .package-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #8a6fa8;
+            width: 40px;
+            text-align: center;
+        }
+
+        .package-info {
+            flex: 1;
+        }
+
+        .package-title {
+            font-weight: 600;
+            color: #725172;
+            margin-bottom: 5px;
+        }
+
+        .package-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .package-savings {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        /* Кнопки действий */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-booking {
+            flex: 1;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        /* Стили для формы ввода карты */
+        .card-input-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .card-input-section.active {
+            border-color: #725172;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+            display: block;
+        }
+
+        .card-input-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card-input-group {
+            flex: 1;
+        }
+
+        .card-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-chip {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .card-number {
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+        }
+
+        .card-input {
+            position: relative;
+        }
+
+        .card-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #725172;
+        }
+
+        .security-code-info {
+            position: relative;
+            cursor: help;
+        }
+
+        .security-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .security-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #333;
+        }
+
+        .security-code-info:hover .security-tooltip {
+            opacity: 1;
+        }
+
+        .payment-processing {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .payment-success {
+            text-align: center;
+            padding: 30px;
+            color: #28a745;
+        }
+
+        .payment-error {
+            text-align: center;
+            padding: 30px;
+            color: #dc3545;
+        }
+
+        .saved-cards {
+            margin-top: 15px;
+        }
+
+        .saved-card {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #e8e0e5;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .saved-card:hover {
+            background: #f9f5fa;
+        }
+
+        .saved-card.selected {
+            border-color: #725172;
+            background: linear-gradient(135deg, #f9f5fa, #f0ebf5);
+        }
+
+        .card-type-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: #725172;
+        }
+
+        @media (max-width: 768px) {
+            .profile-actions {
+                flex-direction: column;
+            }
+
+            .profile-actions .btn {
+                width: 100%;
+            }
+
+            .gender-selection {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .card-input-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <div class="container">
+            <h1>Салон красоты "Элегантность"</h1>
+            <p>Ваша красота - наша профессия</p>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <div class="row">
+            <!-- Вертикальное меню -->
+            <nav class="sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="personal.html">Личный кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                </ul>
+            </nav>
+
+            <!-- Кнопка бургер-меню для мобильных -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Мобильное меню -->
+            <nav class="mobile-menu" id="mobileMenu">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="index.html" onclick="closeMenu()">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html" onclick="closeMenu()">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html" onclick="closeMenu()">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html" onclick="closeMenu()">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link" href="reviews.html" onclick="closeMenu()">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html" onclick="closeMenu()">Контакты</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="personal.html" onclick="closeMenu()">Личный
+                            кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html" onclick="closeMenu()">FAQ</a></li>
+                </ul>
+            </nav>
+
+            <!-- Оверлей для мобильного меню -->
+            <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+            <!-- Основное содержимое -->
+            <main class="col-md-9 content">
+                <!-- Заголовок личного кабинета -->
+                <div class="personal-header rounded" id="personalHeader">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h2>Личный кабинет</h2>
+                            <p class="mb-0">Управляйте вашими записями и персональной информацией</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <button class="btn btn-outline-light" onclick="logout()" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Выйти
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Контент будет загружаться динамически -->
+                <div id="contentArea">
+                    <!-- Сюда будет загружаться либо форма входа, либо личный кабинет -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Модальное окно редактирования профиля -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактирование профиля</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm">
+                        <div class="mb-3">
+                            <label for="editUserName" class="form-label">Имя *</label>
+                            <input type="text" class="form-control" id="editUserName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Пол</label>
+                            <div class="gender-selection">
+                                <div class="gender-option" onclick="selectGender('female')" id="genderFemale">
+                                    <div class="gender-icon">
+                                        <i class="fas fa-venus"></i>
+                                    </div>
+                                    <div class="gender-text">Женский</div>
+                                </div>
+                                <div class="gender-option" onclick="selectGender('male')" id="genderMale">
+                                    <div class="gender-icon">
+                                        <i class="fas fa-mars"></i>
+                                    </div>
+                                    <div class="gender-text">Мужской</div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="editUserGender" name="gender">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserPhone" class="form-label">Телефон *</label>
+                            <input type="tel" class="form-control" id="editUserPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editUserEmail">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProfile()">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно оплаты картой -->
+    <div class="modal fade" id="cardPaymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Оплата картой</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="paymentForm">
+                        <div class="card-preview">
+                            <div class="card-chip"></div>
+                            <div class="card-number" id="previewCardNumber">•••• •••• •••• ••••</div>
+                            <div class="card-details">
+                                <div>
+                                    <div style="font-size: 0.7em; opacity: 0.8;">ВЛАДЕЛЕЦ КАРТЫ</div>
+                                    <div id="previewCardHolder">ВАШЕ ИМЯ</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 0.7em; opacity: 0.8;">СРОК ДЕЙСТВИЯ</div>
+                                    <div id="previewCardExpiry">ММ/ГГ</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Сохраненные карты -->
+                        <div class="saved-cards" id="savedCardsSection" style="display: none;">
+                            <h6>Сохраненные карты</h6>
+                            <div id="savedCardsList"></div>
+                            <button type="button" class="btn btn-outline-secondary w-100 mt-2"
+                                onclick="showNewCardForm()">
+                                <i class="fas fa-plus"></i> Использовать новую карту
+                            </button>
+                            <hr>
+                        </div>
+
+                        <form id="cardPaymentForm">
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label">Номер карты</label>
+                                <input type="text" class="form-control" id="cardNumber"
+                                    placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)"
+                                    required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="cardHolder" class="form-label">Имя владельца карты</label>
+                                <input type="text" class="form-control" id="cardHolder" placeholder="IVAN IVANOV"
+                                    oninput="updateCardPreview()" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="cardExpiry" class="form-label">Срок действия</label>
+                                    <input type="text" class="form-control" id="cardExpiry" placeholder="ММ/ГГ"
+                                        maxlength="5" oninput="formatExpiryDate(this)" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cardCVC" class="form-label">
+                                        <span class="security-code-info">
+                                            CVC/CVV
+                                            <div class="security-tooltip">
+                                                3 цифры на обратной стороне карты
+                                            </div>
+                                        </span>
+                                    </label>
+                                    <div class="card-input">
+                                        <input type="text" class="form-control" id="cardCVC" placeholder="123"
+                                            maxlength="3" required>
+                                        <i class="fas fa-lock card-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="saveCardInfo">
+                                <label class="form-check-label" for="saveCardInfo">
+                                    Сохранить данные карты для будущих платежей
+                                </label>
+                            </div>
+
+                            <div class="payment-info">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Сумма к оплате:</span>
+                                    <strong id="paymentAmount">0 руб.</strong>
+                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-lock"></i> Ваши данные защищены шифрованием
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="paymentProcessing" class="payment-processing" style="display: none;">
+                        <div class="spinner-border text-primary mb-3" role="status">
+                            <span class="visually-hidden">Обработка...</span>
+                        </div>
+                        <h5>Обработка платежа</h5>
+                        <p>Пожалуйста, подождите...</p>
+                    </div>
+
+                    <div id="paymentSuccess" class="payment-success" style="display: none;">
+                        <i class="fas fa-check-circle fa-3x mb-3"></i>
+                        <h5>Оплата прошла успешно!</h5>
+                        <p>Ваш платеж был успешно обработан.</p>
+                        <div class="mt-3">
+                            <strong>Сумма:</strong> <span id="successAmount"></span><br>
+                            <strong>Номер транзакции:</strong> <span id="transactionId"></span>
+                        </div>
+                    </div>
+
+                    <div id="paymentError" class="payment-error" style="display: none;">
+                        <i class="fas fa-times-circle fa-3x mb-3"></i>
+                        <h5>Ошибка оплаты</h5>
+                        <p id="errorMessage">Произошла ошибка при обработке платежа.</p>
+                        <button class="btn btn-primary mt-2" onclick="retryPayment()">Попробовать снова</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="cancelPaymentBtn">Отмена</button>
+                    <button type="button" class="btn btn-primary" onclick="processCardPayment()" id="processPaymentBtn">
+                        <i class="fas fa-lock"></i> Оплатить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал сайта -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Салон красоты "Элегантность". Все права защищены.</p>
+            <p>Адрес: г. Тула, ул. Бондаренко, д. 25 | Телефон: +7 (961) 265-35-25</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Данные пользователя
+        let currentUser = {
+            isLoggedIn: false,
+            name: '',
+            gender: '',
+            phone: '',
+            email: '',
+            bookings: [],
+            history: []
+        };
+
+        // Текущий выбор пользователя
+        let currentSelection = {
+            gender: 'female',
+            selectedServices: [],
+            paymentMethod: 'cash',
+            package: 'individual'
+        };
+
+        // Данные услуг с указанием пола
+        const servicesData = {
+            female: {
+                'Парикмахерские услуги': [
+                    { name: 'Женская стрижка', price: 1500, id: 'female_haircut' },
+                    { name: 'Стрижка челки', price: 300, id: 'female_bangs' },
+                    { name: 'Окрашивание волос', price: 2500, id: 'female_coloring' },
+                    { name: 'Мелирование', price: 3000, id: 'female_highlights' },
+                    { name: 'Тонирование', price: 1200, id: 'female_toning' },
+                    { name: 'Укладка', price: 800, id: 'female_styling' },
+                    { name: 'Вечерняя прическа', price: 2000, id: 'female_evening' },
+                    { name: 'Сложное окрашивание', price: 4500, id: 'female_complex_coloring' }
+                ],
+                'Уход за лицом': [
+                    { name: 'Чистка лица', price: 2000, id: 'female_facial_cleaning' },
+                    { name: 'Уходовая процедура', price: 2500, id: 'female_facial_care' },
+                    { name: 'Пилинг', price: 1500, id: 'female_peeling' },
+                    { name: 'Массаж лица', price: 1800, id: 'female_facial_massage' },
+                    { name: 'Ультразвуковая чистка', price: 3000, id: 'female_ultrasound' }
+                ],
+                'Маникюр и педикюр': [
+                    { name: 'Маникюр', price: 1200, id: 'female_manicure' },
+                    { name: 'Педикюр', price: 1500, id: 'female_pedicure' },
+                    { name: 'Покрытие гель-лаком', price: 800, id: 'female_gel' },
+                    { name: 'Наращивание ногтей', price: 3000, id: 'female_nail_ext' },
+                    { name: 'Дизайн ногтей', price: 500, id: 'female_nail_design' }
+                ],
+                'Косметология': [
+                    { name: 'Консультация косметолога', price: 500, id: 'female_consultation' },
+                    { name: 'Биоревитализация', price: 5000, id: 'female_biorev' },
+                    { name: 'Ботокс', price: 4000, id: 'female_botox' },
+                    { name: 'Плазмолифтинг', price: 3500, id: 'female_plasma' }
+                ],
+                'Макияж': [
+                    { name: 'Дневной макияж', price: 1500, id: 'female_day_makeup' },
+                    { name: 'Вечерний макияж', price: 2500, id: 'female_evening_makeup' },
+                    { name: 'Свадебный макияж', price: 4000, id: 'female_wedding_makeup' }
+                ]
+            },
+            male: {
+                'Парикмахерские услуги': [
+                    { name: 'Мужская стрижка', price: 800, id: 'male_haircut' },
+                    { name: 'Стрижка машинкой', price: 500, id: 'male_machine_cut' },
+                    { name: 'Стрижка + борода', price: 1200, id: 'male_haircut_beard' },
+                    { name: 'Оформление бороды', price: 600, id: 'male_beard_trim' },
+                    { name: 'Камуфляж седины', price: 1000, id: 'male_gray_cover' }
+                ],
+                'Уход за лицом': [
+                    { name: 'Мужская чистка лица', price: 1800, id: 'male_facial_cleaning' },
+                    { name: 'Мужской пилинг', price: 1200, id: 'male_peeling' },
+                    { name: 'Уход за кожей после бритья', price: 1000, id: 'male_after_shave' }
+                ],
+                'Барберинг': [
+                    { name: 'Классическое бритье', price: 1500, id: 'male_classic_shave' },
+                    { name: 'Королевское бритье', price: 2000, id: 'male_royal_shave' },
+                    { name: 'Восковая депиляция', price: 800, id: 'male_waxing' }
+                ],
+                'Маникюр': [
+                    { name: 'Мужской маникюр', price: 800, id: 'male_manicure' },
+                    { name: 'Мужской педикюр', price: 1200, id: 'male_pedicure' },
+                    { name: 'Обработка кожи', price: 400, id: 'male_skin_treatment' }
+                ]
+            }
+        };
+
+        // Пакеты услуг
+        const servicePackages = {
+            individual: {
+                name: 'Индивидуальный выбор',
+                description: 'Выберите услуги по отдельности',
+                discount: 0
+            },
+            basic: {
+                name: 'Базовый пакет',
+                description: 'Основные услуги для ежедневного ухода',
+                discount: 10,
+                services: {
+                    female: ['female_haircut', 'female_manicure', 'female_facial_cleaning'],
+                    male: ['male_haircut', 'male_manicure', 'male_facial_cleaning']
+                }
+            },
+            premium: {
+                name: 'Премиум пакет',
+                description: 'Полный комплекс услуг премиум-класса',
+                discount: 20,
+                services: {
+                    female: ['female_haircut', 'female_coloring', 'female_manicure', 'female_pedicure', 'female_facial_care'],
+                    male: ['male_haircut_beard', 'male_royal_shave', 'male_manicure', 'male_pedicure', 'male_facial_cleaning']
+                }
+            },
+            complete: {
+                name: 'Полный комплекс',
+                description: 'Все доступные услуги выбранного пола',
+                discount: 25,
+                services: 'all'
+            }
+        };
+
+        // Методы оплаты
+        const paymentMethods = {
+            cash: {
+                name: 'Наличные в салоне',
+                description: 'Оплата наличными при посещении салона',
+                icon: 'fa-money-bill-wave'
+            },
+            card: {
+                name: 'Картой в салоне',
+                description: 'Оплата банковской картой при посещении',
+                icon: 'fa-credit-card'
+            },
+            online_card: {
+                name: 'Онлайн картой',
+                description: 'Безопасная оплата картой через интернет',
+                icon: 'fa-globe'
+            },
+            sbp: {
+                name: 'СБП (Система быстрых платежей)',
+                description: 'Мгновенная оплата по номеру телефона',
+                icon: 'fa-mobile-alt'
+            }
+        };
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+            setupMobileMenu();
+        });
+
+        // Проверка авторизации
+        function checkAuth() {
+            const savedUser = localStorage.getItem('beautySalonUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                currentUser.isLoggedIn = true;
+                currentSelection.gender = currentUser.gender || 'female';
+                showPersonalCabinet();
+            } else {
+                showLoginForm();
+            }
+        }
+
+        // Показать форму входа
+        function showLoginForm() {
+            document.getElementById('personalHeader').style.display = 'none';
+            document.getElementById('contentArea').innerHTML = `
+                <div class="login-form">
+                    <h2 class="text-center mb-4">Вход в личный кабинет</h2>
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginPhone" class="form-label">Телефон *</label>
+                            <input type="tel" class="form-control" id="loginPhone" required
+                                   placeholder="+7 (XXX) XXX-XX-XX">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginName" class="form-label">Ваше имя *</label>
+                            <input type="text" class="form-control" id="loginName" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Войти / Зарегистрироваться</button>
+                    </form>
+                    <p class="text-center mt-3 text-muted">
+                        При первом входе будет создан новый аккаунт
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('loginForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                loginUser();
+            });
+        }
+
+        // Показать личный кабинет
+        function showPersonalCabinet() {
+            document.getElementById('personalHeader').style.display = 'block';
+            document.getElementById('contentArea').innerHTML = `
+                <!-- Информация о пользователе -->
+                <div class="user-info-card">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3 id="userName">${currentUser.name}</h3>
+                            <p class="mb-1"><strong>Пол:</strong> <span id="userGender">${getGenderDisplayName(currentUser.gender)}</span></p>
+                            <p class="mb-1"><strong>Телефон:</strong> <span id="userPhone">${currentUser.phone}</span></p>
+                            <p class="mb-1"><strong>Email:</strong> <span id="userEmail">${currentUser.email || 'не указан'}</span></p>
+                            <p class="mb-0"><strong>Количество записей:</strong> <span id="bookingsCount">${currentUser.bookings.length}</span></p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="profile-actions">
+                                <button class="btn btn-primary" onclick="openEditProfileModal()">
+                                    <i class="fas fa-edit"></i> Редактировать
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="openBookingModal()">
+                                    <i class="fas fa-plus"></i> Новая запись
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Калькулятор стоимости -->
+                <div class="calculator-section">
+                    <h3>Калькулятор стоимости услуг</h3>
+                    <p>Выберите интересующие вас услуги для расчета стоимости</p>
+                    
+                    <div class="gender-selection mb-4">
+                        <div class="gender-option ${currentSelection.gender === 'female' ? 'selected' : ''}" onclick="selectCalculatorGender('female')" id="calcGenderFemale">
+                            <div class="gender-icon">
+                                <i class="fas fa-venus"></i>
+                            </div>
+                            <div class="gender-text">Женские услуги</div>
+                        </div>
+                        <div class="gender-option ${currentSelection.gender === 'male' ? 'selected' : ''}" onclick="selectCalculatorGender('male')" id="calcGenderMale">
+                            <div class="gender-icon">
+                                <i class="fas fa-mars"></i>
+                            </div>
+                            <div class="gender-text">Мужские услуги</div>
+                        </div>
+                    </div>
+
+                    <!-- Выбор пакета услуг -->
+                    <div class="package-selection">
+                        <h5>Выберите пакет услуг</h5>
+                        ${renderPackageSelection()}
+                    </div>
+
+                    <div id="calculatorServices">
+                        ${renderCalculatorServices(currentSelection.gender)}
+                    </div>
+
+                    <!-- Выбор способа оплаты -->
+                    <div class="payment-selection">
+                        <h5>Способ оплаты</h5>
+                        ${renderPaymentSelection()}
+                    </div>
+
+                    <!-- Форма для ввода карты -->
+                    <div class="card-input-section" id="cardFormSection">
+                        <h6>Данные банковской карты</h6>
+                        <p class="text-muted mb-3">Введите данные вашей карты для безопасной оплаты</p>
+                        <button type="button" class="btn btn-outline-primary" onclick="openCardPaymentModal()">
+                            <i class="fas fa-credit-card"></i> Ввести данные карты
+                        </button>
+                    </div>
+
+                    <div class="calculator-result">
+                        <h4>Итоговая стоимость</h4>
+                        <div class="total-price" id="totalPrice">0 руб.</div>
+                        <div id="discountInfo"></div>
+                        <p class="text-muted mb-0">* Цены являются ориентировочными</p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary btn-booking" onclick="createBooking()">
+                            <i class="fas fa-calendar-plus"></i> Записаться с выбранными услугами
+                        </button>
+                        <button class="btn btn-outline-primary btn-booking" onclick="saveSelection()">
+                            <i class="fas fa-save"></i> Сохранить подборку
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Мои записи -->
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>Мои записи</h3>
+                        <button class="btn btn-primary" onclick="openBookingModal()">
+                            <i class="fas fa-plus"></i> Новая запись
+                        </button>
+                    </div>
+                    <div id="bookingsList">
+                        <!-- Записи будут загружаться здесь -->
+                    </div>
+                </div>
+
+                <!-- История записей -->
+                <div>
+                    <h3 class="mb-3">История записей</h3>
+                    <div id="bookingsHistory">
+                        <!-- История будет загружаться здесь -->
+                    </div>
+                </div>
+            `;
+
+            renderBookings();
+            setupCalculator();
+            setupPaymentSelection();
+        }
+
+        // Настройка выбора оплаты
+        function setupPaymentSelection() {
+            const cardFormSection = document.getElementById('cardFormSection');
+            if (currentSelection.paymentMethod === 'online_card') {
+                cardFormSection.classList.add('active');
+            } else {
+                cardFormSection.classList.remove('active');
+            }
+        }
+
+        // Функции для работы с оплатой картой
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = '';
+
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+
+            input.value = formattedValue;
+            updateCardPreview();
+        }
+
+        function formatExpiryDate(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+
+            input.value = value;
+            updateCardPreview();
+        }
+
+        function updateCardPreview() {
+            const cardNumber = document.getElementById('cardNumber').value || '•••• •••• •••• ••••';
+            const cardHolder = document.getElementById('cardHolder').value.toUpperCase() || 'ВАШЕ ИМЯ';
+            const cardExpiry = document.getElementById('cardExpiry').value || 'ММ/ГГ';
+
+            document.getElementById('previewCardNumber').textContent = cardNumber;
+            document.getElementById('previewCardHolder').textContent = cardHolder;
+            document.getElementById('previewCardExpiry').textContent = cardExpiry;
+        }
+
+        function openCardPaymentModal() {
+            const totalPrice = document.getElementById('totalPrice').textContent;
+            document.getElementById('paymentAmount').textContent = totalPrice;
+
+            // Показать сохраненные карты если есть
+            showSavedCards();
+
+            const modal = new bootstrap.Modal(document.getElementById('cardPaymentModal'));
+            modal.show();
+        }
+
+        function showSavedCards() {
+            const savedCards = JSON.parse(localStorage.getItem('userSavedCards') || '[]');
+            const savedCardsSection = document.getElementById('savedCardsSection');
+            const savedCardsList = document.getElementById('savedCardsList');
+
+            if (savedCards.length > 0) {
+                savedCardsSection.style.display = 'block';
+                savedCardsList.innerHTML = savedCards.map((card, index) => `
+                    <div class="saved-card" onclick="selectSavedCard(${index})">
+                        <div class="card-type-icon">
+                            <i class="fab fa-cc-${card.type || 'visa'}"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="fw-bold">${card.number}</div>
+                            <small class="text-muted">${card.holder} • ${card.expiry}</small>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                savedCardsSection.style.display = 'none';
+            }
+        }
+
+        function selectSavedCard(index) {
+            const savedCards = JSON.parse(localStorage.getItem('userSavedCards') || '[]');
+            const card = savedCards[index];
+
+            // Сбросить выделение
+            document.querySelectorAll('.saved-card').forEach(el => el.classList.remove('selected'));
+            // Выделить выбранную карту
+            event.target.closest('.saved-card').classList.add('selected');
+
+            // Заполнить форму данными карты
+            document.getElementById('cardNumber').value = card.number.replace('•••• •••• •••• ', '');
+            document.getElementById('cardHolder').value = card.holder;
+            document.getElementById('cardExpiry').value = card.expiry;
+            document.getElementById('cardCVC').value = '';
+            document.getElementById('saveCardInfo').checked = false;
+
+            updateCardPreview();
+        }
+
+        function showNewCardForm() {
+            document.getElementById('savedCardsSection').style.display = 'none';
+            document.getElementById('cardPaymentForm').reset();
+            updateCardPreview();
+        }
+
+        function processCardPayment() {
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCVC = document.getElementById('cardCVC').value;
+            const saveCardInfo = document.getElementById('saveCardInfo').checked;
+
+            // Валидация
+            if (!validateCardForm(cardNumber, cardHolder, cardExpiry, cardCVC)) {
+                return;
+            }
+
+            // Показать процесс обработки
+            showPaymentProcessing();
+
+            // Симуляция обработки платежа
+            setTimeout(() => {
+                const paymentSuccess = Math.random() > 0.1; // 90% успешных платежей для демо
+
+                if (paymentSuccess) {
+                    // Сохраняем данные карты если пользователь согласился
+                    if (saveCardInfo) {
+                        saveCardToStorage({
+                            number: '•••• •••• •••• ' + cardNumber.slice(-4),
+                            holder: cardHolder,
+                            expiry: cardExpiry,
+                            type: getCardType(cardNumber)
+                        });
+                    }
+
+                    showPaymentSuccess();
+
+                    // Автоматически закрыть модальное окно через 3 секунды
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('cardPaymentModal'));
+                        modal.hide();
+                        createBookingAfterPayment();
+                    }, 3000);
+                } else {
+                    showPaymentError('Ошибка оплаты. Пожалуйста, проверьте данные карты и попробуйте снова.');
+                }
+            }, 3000);
+        }
+
+        function validateCardForm(number, holder, expiry, cvc) {
+            if (number.replace(/\s/g, '').length !== 16) {
+                alert('Пожалуйста, введите корректный номер карты (16 цифр)');
+                return false;
+            }
+
+            if (!holder || holder.length < 2) {
+                alert('Пожалуйста, введите имя владельца карты');
+                return false;
+            }
+
+            if (!expiry || expiry.length !== 5 || !expiry.includes('/')) {
+                alert('Пожалуйста, введите корректный срок действия карты в формате ММ/ГГ');
+                return false;
+            }
+
+            if (!cvc || cvc.length !== 3) {
+                alert('Пожалуйста, введите корректный CVC код');
+                return false;
+            }
+
+            return true;
+        }
+
+        function getCardType(cardNumber) {
+            if (cardNumber.startsWith('4')) return 'visa';
+            if (cardNumber.startsWith('5')) return 'mastercard';
+            if (cardNumber.startsWith('3')) return 'amex';
+            return 'credit-card';
+        }
+
+        function saveCardToStorage(cardData) {
+            let savedCards = JSON.parse(localStorage.getItem('userSavedCards') || '[]');
+
+            // Проверить, нет ли уже такой карты
+            const isDuplicate = savedCards.some(card =>
+                card.number === cardData.number && card.expiry === cardData.expiry
+            );
+
+            if (!isDuplicate) {
+                savedCards.push({
+                    ...cardData,
+                    id: 'card_' + Date.now(),
+                    savedAt: new Date().toISOString()
+                });
+                localStorage.setItem('userSavedCards', JSON.stringify(savedCards));
+            }
+        }
+
+        function showPaymentProcessing() {
+            document.getElementById('paymentForm').style.display = 'none';
+            document.getElementById('paymentProcessing').style.display = 'block';
+            document.getElementById('paymentSuccess').style.display = 'none';
+            document.getElementById('paymentError').style.display = 'none';
+            document.getElementById('processPaymentBtn').disabled = true;
+            document.getElementById('cancelPaymentBtn').disabled = true;
+        }
+
+        function showPaymentSuccess() {
+            document.getElementById('paymentProcessing').style.display = 'none';
+            document.getElementById('paymentSuccess').style.display = 'block';
+            document.getElementById('successAmount').textContent = document.getElementById('paymentAmount').textContent;
+            document.getElementById('transactionId').textContent = 'TXN_' + Date.now();
+        }
+
+        function showPaymentError(message) {
+            document.getElementById('paymentProcessing').style.display = 'none';
+            document.getElementById('paymentError').style.display = 'block';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('processPaymentBtn').disabled = false;
+            document.getElementById('cancelPaymentBtn').disabled = false;
+        }
+
+        function retryPayment() {
+            document.getElementById('paymentError').style.display = 'none';
+            document.getElementById('paymentForm').style.display = 'block';
+        }
+
+        function createBookingAfterPayment() {
+            if (currentSelection.selectedServices.length === 0) {
+                alert('Пожалуйста, выберите хотя бы одну услугу');
+                return;
+            }
+
+            const bookingData = {
+                services: currentSelection.selectedServices,
+                gender: currentSelection.gender,
+                paymentMethod: 'online_card',
+                package: currentSelection.package,
+                totalPrice: document.getElementById('totalPrice').textContent,
+                cardPayment: true,
+                paid: true
+            };
+
+            localStorage.setItem('pendingBooking', JSON.stringify(bookingData));
+            window.location.href = 'index.html#signup';
+        }
+
+        // Остальные функции остаются без изменений
+        function renderPackageSelection() {
+            let html = '';
+            for (const [key, pkg] of Object.entries(servicePackages)) {
+                html += `
+                    <div class="package-option ${currentSelection.package === key ? 'selected' : ''}" onclick="selectPackage('${key}')">
+                        <div class="package-icon">
+                            <i class="fas fa-${key === 'complete' ? 'crown' : key === 'premium' ? 'star' : key === 'basic' ? 'check' : 'list'}"></i>
+                        </div>
+                        <div class="package-info">
+                            <div class="package-title">${pkg.name}</div>
+                            <div class="package-description">${pkg.description}</div>
+                            ${pkg.discount > 0 ? `<div class="package-savings">Экономия ${pkg.discount}%</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+            return html;
+        }
+
+        function renderPaymentSelection() {
+            let html = '';
+            for (const [key, method] of Object.entries(paymentMethods)) {
+                html += `
+                    <div class="payment-option ${currentSelection.paymentMethod === key ? 'selected' : ''}" onclick="selectPaymentMethod('${key}')">
+                        <div class="payment-icon">
+                            <i class="fas ${method.icon}"></i>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-title">${method.name}</div>
+                            <div class="payment-description">${method.description}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            return html;
+        }
+
+        function selectPaymentMethod(methodKey) {
+            currentSelection.paymentMethod = methodKey;
+
+            // Обновляем визуальное выделение
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.payment-option').classList.add('selected');
+
+            // Показываем/скрываем форму для карты
+            const cardFormSection = document.getElementById('cardFormSection');
+            if (methodKey === 'online_card') {
+                cardFormSection.classList.add('active');
+            } else {
+                cardFormSection.classList.remove('active');
+            }
+        }
+
+        // Остальные функции (selectPackage, applyPackageSelection, selectCalculatorGender, renderCalculatorServices, 
+        // updateSelectedServices, setupCalculator, updateTotalPrice, createBooking, saveSelection, getGenderDisplayName,
+        // loginUser, selectGender, openEditProfileModal, saveProfile, и т.д.) остаются без изменений
+
+        // Вход пользователя
+        function loginUser() {
+            const phone = document.getElementById('loginPhone').value;
+            const name = document.getElementById('loginName').value;
+            if (phone && name) {
+                currentUser = {
+                    isLoggedIn: true,
+                    name: name,
+                    gender: '',
+                    phone: phone,
+                    email: '',
+                    bookings: getBookingsFromStorage(phone) || [],
+                    history: getHistoryFromStorage(phone) || []
+                };
+                localStorage.setItem('beautySalonUser', JSON.stringify(currentUser));
+                showPersonalCabinet();
+            }
+        }
+
+        // Выбор пола в форме редактирования
+        function selectGender(gender) {
+            const femaleOption = document.getElementById('genderFemale');
+            const maleOption = document.getElementById('genderMale');
+            femaleOption.classList.remove('selected');
+            maleOption.classList.remove('selected');
+            if (gender === 'female') {
+                femaleOption.classList.add('selected');
+            } else {
+                maleOption.classList.add('selected');
+            }
+            document.getElementById('editUserGender').value = gender;
+        }
+
+        // Открытие модального окна редактирования профиля
+        function openEditProfileModal() {
+            document.getElementById('editUserName').value = currentUser.name;
+            document.getElementById('editUserPhone').value = currentUser.phone;
+            document.getElementById('editUserEmail').value = currentUser.email || '';
+            // Устанавливаем пол
+            const gender = currentUser.gender || 'female';
+            selectGender(gender);
+            const modal = new bootstrap.Modal(document.getElementById('editProfileModal'));
+            modal.show();
+        }
+
+        // Сохранение профиля
+        function saveProfile() {
+            const oldPhone = currentUser.phone;
+            currentUser.name = document.getElementById('editUserName').value;
+            currentUser.phone = document.getElementById('editUserPhone').value;
+            currentUser.email = document.getElementById('editUserEmail').value;
+            currentUser.gender = document.getElementById('editUserGender').value;
+            // Если изменился телефон, обновляем данные в хранилище
+            if (oldPhone !== currentUser.phone) {
+                updateStorageForNewPhone(oldPhone, currentUser.phone);
+            }
+            localStorage.setItem('beautySalonUser', JSON.stringify(currentUser));
+            // Обновляем интерфейс
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('userGender').textContent = getGenderDisplayName(currentUser.gender);
+            document.getElementById('userPhone').textContent = currentUser.phone;
+            document.getElementById('userEmail').textContent = currentUser.email || 'не указан';
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editProfileModal'));
+            modal.hide();
+            alert('Профиль успешно сохранен!');
+        }
+
+        // Получить записи пользователя из хранилища
+        function getBookingsFromStorage(phone) {
+            const allBookings = JSON.parse(localStorage.getItem('beautySalonBookings') || '{}');
+            return allBookings[phone] || [];
+        }
+
+        // Получить историю пользователя из хранилища
+        function getHistoryFromStorage(phone) {
+            const allHistory = JSON.parse(localStorage.getItem('beautySalonHistory') || '{}');
+            return allHistory[phone] || [];
+        }
+
+        // Сохранить записи пользователя в хранилище
+        function saveBookingsToStorage() {
+            const allBookings = JSON.parse(localStorage.getItem('beautySalonBookings') || '{}');
+            allBookings[currentUser.phone] = currentUser.bookings;
+            localStorage.setItem('beautySalonBookings', JSON.stringify(allBookings));
+        }
+
+        // Сохранить историю пользователя в хранилище
+        function saveHistoryToStorage() {
+            const allHistory = JSON.parse(localStorage.getItem('beautySalonHistory') || '{}');
+            allHistory[currentUser.phone] = currentUser.history;
+            localStorage.setItem('beautySalonHistory', JSON.stringify(allHistory));
+        }
+
+        // Выход из системы
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                currentUser.isLoggedIn = false;
+                localStorage.removeItem('beautySalonUser');
+                showLoginForm();
+            }
+        }
+
+        // Обновление хранилища при смене телефона
+        function updateStorageForNewPhone(oldPhone, newPhone) {
+            const allBookings = JSON.parse(localStorage.getItem('beautySalonBookings') || '{}');
+            const allHistory = JSON.parse(localStorage.getItem('beautySalonHistory') || '{}');
+            if (allBookings[oldPhone]) {
+                allBookings[newPhone] = allBookings[oldPhone];
+                delete allBookings[oldPhone];
+                localStorage.setItem('beautySalonBookings', JSON.stringify(allBookings));
+            }
+            if (allHistory[oldPhone]) {
+                allHistory[newPhone] = allHistory[oldPhone];
+                delete allHistory[oldPhone];
+                localStorage.setItem('beautySalonHistory', JSON.stringify(allHistory));
+            }
+        }
+
+        // Функции мобильного меню
+        function setupMobileMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const menuOverlay = document.getElementById('menuOverlay');
+            if (menuToggle && menuOverlay) {
+                menuToggle.addEventListener('click', toggleMenu);
+                menuOverlay.addEventListener('click', closeMenu);
+            }
+        }
+
+        function toggleMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Создание записи с выбранными услугами
+        function createBooking() {
+            if (currentSelection.selectedServices.length === 0) {
+                alert('Пожалуйста, выберите хотя бы одну услугу');
+                return;
+            }
+
+            // Если выбран онлайн-платеж картой, открываем форму оплаты
+            if (currentSelection.paymentMethod === 'online_card') {
+                openCardPaymentModal();
+                return;
+            }
+
+            // Для других способов оплаты - стандартный процесс
+            const bookingData = {
+                services: currentSelection.selectedServices,
+                gender: currentSelection.gender,
+                paymentMethod: currentSelection.paymentMethod,
+                package: currentSelection.package,
+                totalPrice: document.getElementById('totalPrice').textContent
+            };
+
+            localStorage.setItem('pendingBooking', JSON.stringify(bookingData));
+            window.location.href = 'index.html#signup';
+        }
+
+        // Остальные вспомогательные функции...
+        function getGenderDisplayName(gender) {
+            return gender === 'female' ? 'Женский' : gender === 'male' ? 'Мужской' : 'Не указан';
+        }
+
+        // Выбор пакета услуг
+        function selectPackage(packageKey) {
+            currentSelection.package = packageKey;
+            document.querySelectorAll('.package-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.package-option').classList.add('selected');
+            applyPackageSelection();
+            updateTotalPrice();
+        }
+
+        // Применение выбранного пакета
+        function applyPackageSelection() {
+            const pkg = servicePackages[currentSelection.package];
+            document.querySelectorAll('#calculatorServices input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            if (pkg.services === 'all') {
+                document.querySelectorAll('#calculatorServices input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = true;
+                });
+            } else if (pkg.services && pkg.services[currentSelection.gender]) {
+                pkg.services[currentSelection.gender].forEach(serviceId => {
+                    const checkbox = document.getElementById(serviceId);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            updateSelectedServices();
+        }
+
+        // Выбор пола в калькуляторе
+        function selectCalculatorGender(gender) {
+            currentSelection.gender = gender;
+            const femaleOption = document.getElementById('calcGenderFemale');
+            const maleOption = document.getElementById('calcGenderMale');
+            femaleOption.classList.remove('selected');
+            maleOption.classList.remove('selected');
+            if (gender === 'female') {
+                femaleOption.classList.add('selected');
+            } else {
+                maleOption.classList.add('selected');
+            }
+            document.getElementById('calculatorServices').innerHTML = renderCalculatorServices(gender);
+            applyPackageSelection();
+            setupCalculator();
+        }
+
+        // Рендеринг услуг для калькулятора
+        function renderCalculatorServices(gender) {
+            const services = servicesData[gender] || servicesData.female;
+            let html = '';
+            for (const [category, categoryServices] of Object.entries(services)) {
+                html += `
+                    <div class="service-category">
+                        <div class="category-title">${category}</div>
+                        ${categoryServices.map(service => `
+                            <div class="service-checkbox">
+                                <input type="checkbox" id="${service.id}" value="${service.price}" onchange="updateSelectedServices()">
+                                <label for="${service.id}" class="service-name">${service.name}</label>
+                                <span class="service-price">${service.price} руб.</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            return html;
+        }
+
+        // Обновление списка выбранных услуг
+        function updateSelectedServices() {
+            const checkboxes = document.querySelectorAll('#calculatorServices input[type="checkbox"]');
+            currentSelection.selectedServices = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    currentSelection.selectedServices.push(checkbox.id);
+                }
+            });
+            updateTotalPrice();
+        }
+
+        // Настройка калькулятора
+        function setupCalculator() {
+            updateSelectedServices();
+            updateTotalPrice();
+        }
+
+        // Обновление общей стоимости
+        function updateTotalPrice() {
+            const checkboxes = document.querySelectorAll('#calculatorServices input[type="checkbox"]:checked');
+            let total = 0;
+            checkboxes.forEach(checkbox => {
+                total += parseInt(checkbox.value);
+            });
+            // Применяем скидку пакета
+            const pkg = servicePackages[currentSelection.package];
+            let discountAmount = 0;
+            let finalTotal = total;
+            if (pkg.discount > 0) {
+                discountAmount = total * (pkg.discount / 100);
+                finalTotal = total - discountAmount;
+            }
+            document.getElementById('totalPrice').textContent = Math.round(finalTotal) + ' руб.';
+            // Показываем информацию о скидке
+            const discountInfo = document.getElementById('discountInfo');
+            if (discountAmount > 0) {
+                discountInfo.innerHTML = `
+                    <div style="color: #28a745; font-weight: 600;">
+                        Скидка ${pkg.discount}%: -${Math.round(discountAmount)} руб.
+                    </div>
+                    <div style="color: #666; text-decoration: line-through;">
+                        Изначальная стоимость: ${Math.round(total)} руб.
+                    </div>
+                `;
+            } else {
+                discountInfo.innerHTML = '';
+            }
+        }
+
+        // Сохранение подборки
+        function saveSelection() {
+            if (currentSelection.selectedServices.length === 0) {
+                alert('Пожалуйста, выберите хотя бы одну услугу');
+                return;
+            }
+            const selectionData = {
+                services: currentSelection.selectedServices,
+                gender: currentSelection.gender,
+                paymentMethod: currentSelection.paymentMethod,
+                package: currentSelection.package,
+                totalPrice: document.getElementById('totalPrice').textContent,
+                timestamp: new Date().toISOString()
+            };
+            // Сохраняем в историю подборок пользователя
+            let savedSelections = JSON.parse(localStorage.getItem('userServiceSelections') || '[]');
+            savedSelections.unshift(selectionData);
+            // Ограничиваем историю 10 последними подборками
+            if (savedSelections.length > 10) {
+                savedSelections = savedSelections.slice(0, 10);
+            }
+            localStorage.setItem('userServiceSelections', JSON.stringify(savedSelections));
+            alert('Подборка услуг успешно сохранена!');
+        }
+
+        // Открытие модального окна записи
+        function openBookingModal() {
+            window.location.href = 'index.html#signup';
+        }
+
+        // Отображение записей
+        function renderBookings() {
+            const bookingsList = document.getElementById('bookingsList');
+            const historyList = document.getElementById('bookingsHistory');
+            // Текущие записи
+            if (currentUser.bookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div class="empty-bookings">
+                        <i class="fas fa-calendar-times"></i>
+                        <h4>У вас нет активных записей</h4>
+                        <p>Запишитесь на услугу, чтобы увидеть ее здесь</p>
+                        <button class="btn btn-primary" onclick="openBookingModal()">
+                            Записаться на услугу
+                        </button>
+                    </div>
+                `;
+            } else {
+                bookingsList.innerHTML = currentUser.bookings.map(booking => `
+                    <div class="booking-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h5>${getServiceName(booking.service)}</h5>
+                                    <p class="mb-1"><strong>Мастер:</strong> ${booking.masterName}</p>
+                                    <p class="mb-1"><strong>Дата:</strong> ${formatDate(booking.date)}</p>
+                                    <p class="mb-0"><strong>Время:</strong> ${booking.time}</p>
+                                    ${booking.comment ? `<p class="mb-0 mt-2"><small><strong>Комментарий:</strong> ${booking.comment}</small></p>` : ''}
+                                </div>
+                                <div class="col-md-3 text-center">
+                                    <span class="booking-status status-confirmed">Подтверждена</span>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <button class="btn btn-outline-danger cancel-btn" onclick="cancelBooking('${booking.id}')">
+                                        <i class="fas fa-times"></i> Отменить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            // История записей
+            if (currentUser.history.length === 0) {
+                historyList.innerHTML = '<p class="text-muted">История записей пуста</p>';
+            } else {
+                historyList.innerHTML = currentUser.history.map(booking => `
+                    <div class="booking-card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5>${getServiceName(booking.service)}</h5>
+                                    <p class="mb-1"><strong>Мастер:</strong> ${booking.masterName}</p>
+                                    <p class="mb-1"><strong>Дата:</strong> ${formatDate(booking.date)}</p>
+                                    <p class="mb-0"><strong>Время:</strong> ${booking.time}</p>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <span class="booking-status ${booking.status === 'completed' ? 'status-completed' : 'status-cancelled'}">
+                                        ${booking.status === 'completed' ? 'Завершена' : 'Отменена'}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Вспомогательные функции
+        function getServiceName(serviceKey) {
+            const services = {
+                haircut: 'Стрижка',
+                coloring: 'Окрашивание',
+                manicure: 'Маникюр',
+                pedicure: 'Педикюр',
+                cosmetology: 'Косметология',
+                makeup: 'Макияж'
+            };
+            return services[serviceKey] || serviceKey;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        // Отмена записи
+        function cancelBooking(bookingId) {
+            if (!confirm('Вы уверены, что хотите отменить запись?')) return;
+            const bookingIndex = currentUser.bookings.findIndex(b => b.id === bookingId);
+            if (bookingIndex !== -1) {
+                const booking = currentUser.bookings[bookingIndex];
+                // Освобождаем время у мастера
+                freeMasterTimeSlot(booking.masterId, booking.date, booking.time);
+                // Перемещаем в историю
+                booking.status = 'cancelled';
+                currentUser.history.unshift(booking);
+                currentUser.bookings.splice(bookingIndex, 1);
+                // Сохраняем изменения
+                localStorage.setItem('beautySalonUser', JSON.stringify(currentUser));
+                saveBookingsToStorage();
+                saveHistoryToStorage();
+                renderBookings();
+                // Обновляем счетчик записей
+                document.getElementById('bookingsCount').textContent = currentUser.bookings.length;
+                alert('Запись успешно отменена! Время освобождено для других клиентов.');
+            }
+        }
+
+        // Освобождение времени у мастера
+        function freeMasterTimeSlot(masterId, date, time) {
+            try {
+                const mastersData = JSON.parse(localStorage.getItem('mastersData'));
+                if (mastersData && mastersData[masterId] && mastersData[masterId].busySlots) {
+                    const slotToRemove = `${date} ${time}`;
+                    mastersData[masterId].busySlots = mastersData[masterId].busySlots.filter(slot => {
+                        return slot !== slotToRemove;
+                    });
+                    localStorage.setItem('mastersData', JSON.stringify(mastersData));
+                    console.log(`Время ${time} ${date} освобождено у мастера ${masterId}`);
+                } else {
+                    console.warn('Данные мастера не найдены:', masterId);
+                }
+            } catch (error) {
+                console.error('Ошибка при освобождении времени:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

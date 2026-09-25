@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы - Салон красоты "Элегантность"</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .review-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #8a6fa8;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .review-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .review-client {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .client-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #e8e0e5;
+        }
+
+        .client-info h4 {
+            margin: 0;
+            color: #725172;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3em;
+        }
+
+        .client-info .service {
+            color: #8a6fa8;
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+
+        .review-date {
+            color: #8a6fa8;
+            font-size: 0.9em;
+            background: #f9f5fa;
+            padding: 5px 12px;
+            border-radius: 15px;
+        }
+
+        .review-rating {
+            color: #ffc107;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .review-title {
+            color: #725172;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .review-text {
+            line-height: 1.6;
+            color: #4a4a4a;
+            font-size: 1.05em;
+            margin-bottom: 15px;
+        }
+
+        .review-master {
+            background: #f9f5fa;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9em;
+            color: #725172;
+            font-weight: 500;
+        }
+
+        .new-review-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 500;
+            margin-left: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .rating-stars input:checked~label,
+        .rating-stars label:hover,
+        .rating-stars label:hover~label {
+            color: #ffc107 !important;
+        }
+
+        .rating-stars input:checked+label {
+            color: #ffc107 !important;
+        }
+
+        .captcha-container {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .captcha-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #333, #666);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .captcha-input {
+            max-width: 200px;
+        }
+
+        .captcha-refresh {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: color 0.2s;
+        }
+
+        .captcha-refresh:hover {
+            color: #495057;
+        }
+
+        /* Новые стили для критериев мастера */
+        .master-criteria {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #8a6fa8;
+        }
+
+        .criteria-title {
+            font-weight: 600;
+            color: #725172;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .criteria-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 5px 0;
+        }
+
+        .criteria-name {
+            font-size: 0.9em;
+            color: #555;
+            flex: 1;
+        }
+
+        .criteria-rating {
+            display: flex;
+            gap: 2px;
+        }
+
+        .criteria-star {
+            color: #ddd;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .criteria-star.filled {
+            color: #ffc107;
+        }
+
+        .criteria-star.animated {
+            animation: starPulse 0.6s ease-in-out;
+        }
+
+        @keyframes starPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .criteria-value {
+            font-size: 0.85em;
+            color: #8a6fa8;
+            font-weight: 500;
+            min-width: 30px;
+            text-align: right;
+        }
+
+        /* Стили для звезд в форме */
+        .criteria-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .criteria-stars input {
+            display: none;
+        }
+
+        .criteria-stars label {
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #e4e5e9;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 2px;
+        }
+
+        .criteria-stars label:hover,
+        .criteria-stars input:checked~label {
+            color: #ffc107;
+            transform: scale(1.2);
+        }
+
+        .criteria-stars input:checked+label {
+            animation: starBounce 0.5s ease-in-out;
+        }
+
+        @keyframes starBounce {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Стили для кнопки удаления */
+        .review-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .delete-review-btn {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .delete-review-btn:hover {
+            background: #dc3545;
+            color: white;
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .review-card:hover .delete-review-btn {
+            opacity: 1;
+        }
+
+        /* Стили для модального окна подтверждения удаления */
+        .modal-confirm {
+            display: none;
+            position: fixed;
+            z-index: 1060;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-confirm-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.confirm {
+            background: #dc3545;
+            color: white;
+        }
+
+        .modal-btn.confirm:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn.cancel {
+            background: #6c757d;
+            color: white;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header class="site-header">
+        <div class="container">
+            <h1>Салон красоты "Элегантность"</h1>
+            <p>Ваша красота - наша профессия</p>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <div class="row">
+            <!-- Вертикальное меню -->
+            <nav class="col-md-3 sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="uslugi.html">Услуги</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ceny.html">Цены</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">О нас</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="reviews.html">Отзывы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contacts.html">Контакты</a></li>
+                    <li class="nav-item"><a class="nav-link" href="personal.html">Личный кабинет</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#add-review">Оставить отзыв</a></li>
+                </ul>
+            </nav>
+
+            <!-- Основное содержимое -->
+            <main class="col-md-9 content">
+                <section id="reviews-hero">
+                    <h2>Отзывы наших клиентов</h2>
+                    <p>Мы ценим каждое мнение и постоянно работаем над улучшением качества наших услуг</p>
+
+                    <!-- Статистика -->
+                    <div class="row reviews-stats">
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-card text-center">
+                                <div class="average-rating" id="averageRating">4.8</div>
+                                <div class="stat-label">Средняя оценка</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-card text-center">
+                                <div class="stat-number" id="totalReviews">156</div>
+                                <div class="stat-label">Всего отзывов</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="stat-card text-center">
+                                <div class="stat-number">94%</div>
+                                <div class="stat-label">Рекомендуют нас</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Детальная статистика -->
+                    <div class="rating-breakdown">
+                        <h3>Распределение оценок</h3>
+                        <div class="rating-bar">
+                            <div class="rating-label">5 звезд</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 75%" id="bar5"></div>
+                            </div>
+                            <div class="bar-count" id="count5">117</div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="rating-label">4 звезды</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 18%" id="bar4"></div>
+                            </div>
+                            <div class="bar-count" id="count4">28</div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="rating-label">3 звезды</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 5%" id="bar3"></div>
+                            </div>
+                            <div class="bar-count" id="count3">8</div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="rating-label">2 звезды</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 1%" id="bar2"></div>
+                            </div>
+                            <div class="bar-count" id="count2">2</div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="rating-label">1 звезда</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 1%" id="bar1"></div>
+                            </div>
+                            <div class="bar-count" id="count1">1</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="all-reviews">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3>Последние отзывы</h3>
+                        <button class="btn btn-outline-primary" onclick="sortReviews('date')">
+                            <i class="fas fa-sort me-2"></i>Сначала новые
+                        </button>
+                    </div>
+                    <div id="reviewsContainer">
+                        <!-- Отзывы будут загружаться здесь динамически -->
+                    </div>
+                    <!-- Кнопка загрузки еще -->
+                    <div class="text-center mt-4" id="loadMoreContainer">
+                        <button class="btn btn-primary" onclick="loadMoreReviews()" id="loadMoreBtn">
+                            <i class="fas fa-plus me-2"></i>Загрузить еще отзывы
+                        </button>
+                    </div>
+                </section>
+
+                <section id="add-review" class="review-form-section">
+                    <h3>Оставить отзыв</h3>
+                    <p>Поделитесь своими впечатлениями о посещении нашего салона</p>
+                    <form id="reviewForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="clientName" class="form-label">Ваше имя *</label>
+                                <input type="text" class="form-control" id="clientName" name="clientName" required>
+                                <div class="invalid-feedback">Пожалуйста, введите ваше имя</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="clientEmail" class="form-label">Ваш email</label>
+                                <input type="email" class="form-control" id="clientEmail" name="clientEmail">
+                                <div class="invalid-feedback">Пожалуйста, введите корректный email</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="serviceType" class="form-label">Услуга *</label>
+                                <select class="form-select" id="serviceType" name="serviceType" required>
+                                    <option value="">Выберите услугу</option>
+                                    <option value="haircut">Стрижка</option>
+                                    <option value="coloring">Окрашивание</option>
+                                    <option value="manicure">Маникюр</option>
+                                    <option value="pedicure">Педикюр</option>
+                                    <option value="cosmetology">Косметология</option>
+                                    <option value="makeup">Макияж</option>
+                                    <option value="other">Другое</option>
+                                </select>
+                                <div class="invalid-feedback">Пожалуйста, выберите услугу</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="masterName" class="form-label">Мастер</label>
+                                <select class="form-select" id="masterName" name="masterName">
+                                    <option value="">Выберите мастера</option>
+                                    <option value="tatyana">Татьяна</option>
+                                    <option value="olga">Ольга</option>
+                                    <option value="anna">Анна</option>
+                                    <option value="lilia">Лилия</option>
+                                    <option value="any">Любой мастер</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Общая оценка *</label>
+                            <div class="rating-stars">
+                                <input type="radio" id="star5" name="rating" value="5" required>
+                                <label for="star5" title="Отлично">★</label>
+                                <input type="radio" id="star4" name="rating" value="4">
+                                <label for="star4" title="Хорошо">★</label>
+                                <input type="radio" id="star3" name="rating" value="3">
+                                <label for="star3" title="Нормально">★</label>
+                                <input type="radio" id="star2" name="rating" value="2">
+                                <label for="star2" title="Плохо">★</label>
+                                <input type="radio" id="star1" name="rating" value="1">
+                                <label for="star1" title="Ужасно">★</label>
+                            </div>
+                            <div class="invalid-feedback">Пожалуйста, поставьте оценку</div>
+                        </div>
+
+                        <!-- Новый блок: Критерии оценки мастера -->
+                        <div class="mb-3 master-criteria-form" id="masterCriteriaSection">
+                            <label class="form-label criteria-title">Оценка мастера по критериям</label>
+                            <div class="criteria-container">
+                                <div class="criteria-item">
+                                    <span class="criteria-name">Аккуратность</span>
+                                    <div class="criteria-stars">
+                                        <input type="radio" id="accuracy5" name="accuracy" value="5">
+                                        <label for="accuracy5" title="Отлично">★</label>
+                                        <input type="radio" id="accuracy4" name="accuracy" value="4">
+                                        <label for="accuracy4" title="Хорошо">★</label>
+                                        <input type="radio" id="accuracy3" name="accuracy" value="3">
+                                        <label for="accuracy3" title="Нормально">★</label>
+                                        <input type="radio" id="accuracy2" name="accuracy" value="2">
+                                        <label for="accuracy2" title="Плохо">★</label>
+                                        <input type="radio" id="accuracy1" name="accuracy" value="1">
+                                        <label for="accuracy1" title="Ужасно">★</label>
+                                    </div>
+                                </div>
+                                <div class="criteria-item">
+                                    <span class="criteria-name">Вежливость</span>
+                                    <div class="criteria-stars">
+                                        <input type="radio" id="politeness5" name="politeness" value="5">
+                                        <label for="politeness5" title="Отлично">★</label>
+                                        <input type="radio" id="politeness4" name="politeness" value="4">
+                                        <label for="politeness4" title="Хорошо">★</label>
+                                        <input type="radio" id="politeness3" name="politeness" value="3">
+                                        <label for="politeness3" title="Нормально">★</label>
+                                        <input type="radio" id="politeness2" name="politeness" value="2">
+                                        <label for="politeness2" title="Плохо">★</label>
+                                        <input type="radio" id="politeness1" name="politeness" value="1">
+                                        <label for="politeness1" title="Ужасно">★</label>
+                                    </div>
+                                </div>
+                                <div class="criteria-item">
+                                    <span class="criteria-name">Скорость работы</span>
+                                    <div class="criteria-stars">
+                                        <input type="radio" id="speed5" name="speed" value="5">
+                                        <label for="speed5" title="Отлично">★</label>
+                                        <input type="radio" id="speed4" name="speed" value="4">
+                                        <label for="speed4" title="Хорошо">★</label>
+                                        <input type="radio" id="speed3" name="speed" value="3">
+                                        <label for="speed3" title="Нормально">★</label>
+                                        <input type="radio" id="speed2" name="speed" value="2">
+                                        <label for="speed2" title="Плохо">★</label>
+                                        <input type="radio" id="speed1" name="speed" value="1">
+                                        <label for="speed1" title="Ужасно">★</label>
+                                    </div>
+                                </div>
+                                <div class="criteria-item">
+                                    <span class="criteria-name">Профессионализм</span>
+                                    <div class="criteria-stars">
+                                        <input type="radio" id="professionalism5" name="professionalism" value="5">
+                                        <label for="professionalism5" title="Отлично">★</label>
+                                        <input type="radio" id="professionalism4" name="professionalism" value="4">
+                                        <label for="professionalism4" title="Хорошо">★</label>
+                                        <input type="radio" id="professionalism3" name="professionalism" value="3">
+                                        <label for="professionalism3" title="Нормально">★</label>
+                                        <input type="radio" id="professionalism2" name="professionalism" value="2">
+                                        <label for="professionalism2" title="Плохо">★</label>
+                                        <input type="radio" id="professionalism1" name="professionalism" value="1">
+                                        <label for="professionalism1" title="Ужасно">★</label>
+                                    </div>
+                                </div>
+                                <div class="criteria-item">
+                                    <span class="criteria-name">Коммуникабельность</span>
+                                    <div class="criteria-stars">
+                                        <input type="radio" id="communication5" name="communication" value="5">
+                                        <label for="communication5" title="Отлично">★</label>
+                                        <input type="radio" id="communication4" name="communication" value="4">
+                                        <label for="communication4" title="Хорошо">★</label>
+                                        <input type="radio" id="communication3" name="communication" value="3">
+                                        <label for="communication3" title="Нормально">★</label>
+                                        <input type="radio" id="communication2" name="communication" value="2">
+                                        <label for="communication2" title="Плохо">★</label>
+                                        <input type="radio" id="communication1" name="communication" value="1">
+                                        <label for="communication1" title="Ужасно">★</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reviewTitle" class="form-label">Заголовок отзыва *</label>
+                            <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" required
+                                placeholder="Кратко опишите ваши впечатления">
+                            <div class="invalid-feedback">Пожалуйста, введите заголовок отзыва</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">Текст отзыва *</label>
+                            <textarea class="form-control" id="reviewText" name="reviewText" rows="5" required
+                                placeholder="Расскажите о вашем опыте посещения салона..."></textarea>
+                            <div class="form-text">
+                                <div class="char-counter">
+                                    <span id="charCount">0</span>/1000 символов
+                                </div>
+                                <div class="profanity-warning" id="profanityWarning" style="display: none;">
+                                    ⚠️ В тексте обнаружены недопустимые слова
+                                </div>
+                            </div>
+                            <div class="invalid-feedback">Пожалуйста, напишите текст отзыва</div>
+                        </div>
+
+                        <!-- Капча -->
+                        <div class="mb-3 captcha-container">
+                            <div class="captcha-display" id="captchaText">
+                                <!-- Капча будет сгенерирована здесь -->
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control captcha-input me-2" id="captchaInput"
+                                    name="captchaInput" required placeholder="Введите текст с картинки">
+                                <button type="button" class="captcha-refresh" id="refreshCaptcha"
+                                    title="Обновить капчу">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback" id="captchaError">Неверный текст капчи</div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" name="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                Я согласен с обработкой персональных данных и правилами публикации отзывов
+                            </label>
+                            <div class="invalid-feedback">Необходимо согласие с условиями</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Опубликовать отзыв
+                        </button>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Подвал сайта -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Салон красоты "Элегантность". Все права защищены.</p>
+            <p>Адрес: г. Тула, ул. Бондаренко, д. 25 | Телефон: +7 (961) 265-35-25</p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно подтверждения удаления -->
+    <div id="deleteConfirmModal" class="modal-confirm">
+        <div class="modal-confirm-content">
+            <h4>Удалить отзыв?</h4>
+            <p>Вы уверены, что хотите удалить этот отзыв? Это действие нельзя отменить.</p>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" id="confirmDeleteBtn">Да, удалить</button>
+                <button class="modal-btn cancel" id="cancelDeleteBtn">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Константы для localStorage
+        const CAPTCHA_KEY = 'beautySalonCaptcha';
+        const STORAGE_KEY = 'beautySalonFormData';
+        const USER_REVIEWS_KEY = 'userReviews';
+
+        // Данные отзывов
+        let allReviews = [];
+        let displayedReviews = 0;
+        const reviewsPerPage = 5;
+        let currentReviewToDelete = null;
+
+        // Система цензуры - список запрещенных слов
+        const profanityList = [
+            'плохоеслово1', 'плохоеслово2', 'мат1', 'мат2', 'брань1', 'брань2',
+            'дурак', 'идиот', 'урод', 'тупой', 'дебил', 'кретин', 'скотина',
+            'сволочь', 'подонок', 'мразь', 'тварь', 'сучка', 'бля', 'хуй', 'пизда',
+            'ебан', 'ебать', 'пиздец', 'блять', 'сука', 'мудак', 'говно', 'дерьмо',
+            'залупа', 'манда', 'хер', 'шлюха', 'проститутка', 'алкаш', 'пьянь',
+            'наркоман', 'уебан', 'пидор', 'педик', 'гомик', 'лесби', 'педофил'
+        ];
+
+        // Класс системы капчи
+        class CaptchaSystem {
+            constructor() {
+                this.chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+                this.length = 6;
+                this.currentCaptcha = '';
+            }
+
+            generateCaptcha() {
+                // Пытаемся восстановить капчу из localStorage
+                const savedCaptcha = localStorage.getItem(CAPTCHA_KEY);
+                if (savedCaptcha) {
+                    this.currentCaptcha = savedCaptcha;
+                    return savedCaptcha;
+                }
+
+                // Генерируем новую капчу
+                let result = '';
+                for (let i = 0; i < this.length; i++) {
+                    result += this.chars.charAt(Math.floor(Math.random() * this.chars.length));
+                }
+
+                this.currentCaptcha = result;
+                localStorage.setItem(CAPTCHA_KEY, result);
+                return result;
+            }
+
+            validate(input) {
+                return input.toLowerCase() === this.currentCaptcha.toLowerCase();
+            }
+
+            display() {
+                const captchaText = document.getElementById('captchaText');
+                const captcha = this.generateCaptcha();
+
+                // Создаем визуальное представление капчи с небольшими искажениями
+                let displayText = '';
+                for (let i = 0; i < captcha.length; i++) {
+                    const char = captcha[i];
+                    // Добавляем случайные пробелы для усложнения
+                    if (Math.random() > 0.8) {
+                        displayText += ' ';
+                    }
+                    displayText += char;
+                }
+
+                captchaText.textContent = displayText;
+            }
+
+            // Генерация новой капчи
+            refresh() {
+                localStorage.removeItem(CAPTCHA_KEY);
+                this.currentCaptcha = '';
+                this.display();
+            }
+        }
+
+        // Система сохранения данных формы
+        class FormDataManager {
+            constructor() {
+                this.storageKey = STORAGE_KEY;
+            }
+
+            // Сохранение данных формы
+            saveFormData(formData) {
+                localStorage.setItem(this.storageKey, JSON.stringify(formData));
+            }
+
+            // Загрузка данных формы
+            loadFormData() {
+                const savedData = localStorage.getItem(this.storageKey);
+                return savedData ? JSON.parse(savedData) : null;
+            }
+
+            // Очистка сохраненных данных
+            clearFormData() {
+                localStorage.removeItem(this.storageKey);
+                localStorage.removeItem(CAPTCHA_KEY);
+            }
+
+            // Восстановление данных в форме
+            restoreFormData() {
+                const savedData = this.loadFormData();
+                if (!savedData) return;
+
+                // Восстанавливаем текстовые поля
+                if (savedData.clientName) {
+                    document.getElementById('clientName').value = savedData.clientName;
+                }
+                if (savedData.clientEmail) {
+                    document.getElementById('clientEmail').value = savedData.clientEmail;
+                }
+                if (savedData.reviewTitle) {
+                    document.getElementById('reviewTitle').value = savedData.reviewTitle;
+                }
+                if (savedData.reviewText) {
+                    document.getElementById('reviewText').value = savedData.reviewText;
+                    updateCharCount(); // Обновляем счетчик символов
+                }
+                if (savedData.captchaInput) {
+                    document.getElementById('captchaInput').value = savedData.captchaInput;
+                }
+
+                // Восстанавливаем выпадающие списки
+                if (savedData.serviceType) {
+                    document.getElementById('serviceType').value = savedData.serviceType;
+                }
+                if (savedData.masterName) {
+                    document.getElementById('masterName').value = savedData.masterName;
+                }
+
+                // Восстанавливаем радио-кнопки (рейтинг)
+                if (savedData.rating) {
+                    const ratingInput = document.querySelector(`input[name="rating"][value="${savedData.rating}"]`);
+                    if (ratingInput) {
+                        ratingInput.checked = true;
+                        updateStarsDisplay(savedData.rating);
+                    }
+                }
+
+                // Восстанавливаем критерии мастера
+                const criteriaNames = ['accuracy', 'politeness', 'speed', 'professionalism', 'communication'];
+                criteriaNames.forEach(criteria => {
+                    if (savedData[criteria]) {
+                        const criteriaInput = document.querySelector(`input[name="${criteria}"][value="${savedData[criteria]}"]`);
+                        if (criteriaInput) {
+                            criteriaInput.checked = true;
+                            updateCriteriaStars(criteria, savedData[criteria]);
+                        }
+                    }
+                });
+
+                // Восстанавливаем чекбокс
+                if (savedData.agreeTerms) {
+                    document.getElementById('agreeTerms').checked = true;
+                }
+
+                console.log('Данные формы восстановлены');
+            }
+
+            // Сбор данных формы
+            collectFormData() {
+                const form = document.getElementById('reviewForm');
+                const formData = new FormData(form);
+                const data = {};
+
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+
+                // Сохраняем также состояние чекбокса
+                data.agreeTerms = document.getElementById('agreeTerms').checked;
+                return data;
+            }
+
+            // Автосохранение при изменении формы
+            setupAutoSave() {
+                const form = document.getElementById('reviewForm');
+                const inputs = form.querySelectorAll('input, select, textarea');
+
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => {
+                        this.saveFormData(this.collectFormData());
+                    });
+                    input.addEventListener('change', () => {
+                        this.saveFormData(this.collectFormData());
+                    });
+                });
+
+                // Отдельно обрабатываем чекбокс
+                document.getElementById('agreeTerms').addEventListener('change', () => {
+                    this.saveFormData(this.collectFormData());
+                });
+            }
+        }
+
+        // Функция для обновления отображения звезд слева направо
+        function updateStarsDisplay(rating) {
+            const stars = document.querySelectorAll('.rating-stars label');
+            stars.forEach((star, index) => {
+                const starNumber = index + 1;
+                if (starNumber <= rating) {
+                    star.style.color = '#ffc107';
+                } else {
+                    star.style.color = '#e4e5e9';
+                }
+            });
+        }
+
+        // Функция для сброса звезд
+        function resetStars() {
+            const stars = document.querySelectorAll('.rating-stars label');
+            stars.forEach(star => {
+                star.style.color = '#e4e5e9';
+            });
+        }
+
+        // Функция для сброса критериев мастера
+        function resetMasterCriteria() {
+            const criteriaInputs = document.querySelectorAll('.criteria-stars input');
+            criteriaInputs.forEach(input => {
+                input.checked = false;
+            });
+            const criteriaLabels = document.querySelectorAll('.criteria-stars label');
+            criteriaLabels.forEach(label => {
+                label.style.color = '#e4e5e9';
+                label.style.transform = 'scale(1)';
+            });
+        }
+
+        // Инициализация систем
+        const captchaSystem = new CaptchaSystem();
+        const formDataManager = new FormDataManager();
+
+        // Функция проверки на наличие запрещенных слов
+        function containsProfanity(text) {
+            const words = text.toLowerCase().split(/\s+/);
+            return words.some(word => {
+                return profanityList.some(profanity => {
+                    return word.includes(profanity.toLowerCase()) ||
+                        profanity.toLowerCase().includes(word);
+                });
+            });
+        }
+
+        // Функция цензурирования текста
+        function censorText(text) {
+            let censoredText = text;
+            profanityList.forEach(profanity => {
+                const regex = new RegExp(profanity, 'gi');
+                censoredText = censoredText.replace(regex, '*'.repeat(profanity.length));
+            });
+            return censoredText;
+        }
+
+        // Предустановленные отзывы с критериями мастера
+        const defaultReviews = [
+            {
+                id: 'review_1',
+                clientName: 'Екатерина Смирнова',
+                avatar: 'https://avatars.mds.yandex.net/i?id=284c0affc378aa522e14b8c67704560be1d41b3b-4011439-images-thumbs&n=13',
+                service: 'Сложное окрашивание',
+                master: 'Татьяна',
+                rating: 5,
+                masterCriteria: {
+                    accuracy: 5,
+                    politeness: 5,
+                    speed: 4,
+                    professionalism: 5,
+                    communication: 5
+                },
+                title: 'Прекрасный результат!',
+                text: 'Обратилась к Татьяне за сложным окрашиванием. Результат превзошел все ожидания! Цвет волос получился именно таким, как я хотела. Татьяна - настоящий профессионал, внимательная к деталям и очень аккуратная.',
+                date: '2025-09-15',
+                isNew: false,
+                userEmail: 'ekaterina@example.com'
+            },
+            {
+                id: 'review_2',
+                clientName: 'Анна Ковалева',
+                avatar: 'https://avatars.mds.yandex.net/i?id=465afa9b28cade4ce138d04c144eeb0a_l-9223201-images-thumbs&n=13',
+                service: 'Чистка лица',
+                master: 'Ольга',
+                rating: 5,
+                masterCriteria: {
+                    accuracy: 5,
+                    politeness: 4,
+                    speed: 5,
+                    professionalism: 5,
+                    communication: 4
+                },
+                title: 'Комфортная процедура',
+                text: 'Была на чистке лица у Ольги. Процедура прошла максимально комфортно. Ольга все подробно объяснила, дала рекомендации по уходу за кожей. Кожа после процедуры просто сияет!',
+                date: '2025-09-10',
+                isNew: false,
+                userEmail: 'anna@example.com'
+            }
+        ];
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            loadReviews();
+            initReviewForm();
+            updateStatistics();
+            initDeleteModal();
+
+            // Инициализация капчи и восстановление данных формы
+            captchaSystem.display();
+            formDataManager.restoreFormData();
+            formDataManager.setupAutoSave();
+        });
+
+        // Загрузка отзывов из localStorage
+        function loadReviews() {
+            const savedReviews = localStorage.getItem('beautySalonReviews');
+            if (savedReviews) {
+                allReviews = JSON.parse(savedReviews);
+            } else {
+                allReviews = [...defaultReviews];
+                saveReviews();
+            }
+
+            // Сортируем отзывы по дате (сначала новые)
+            sortReviews('date');
+            displayReviews();
+        }
+
+        // Сохранение отзывов в localStorage
+        function saveReviews() {
+            localStorage.setItem('beautySalonReviews', JSON.stringify(allReviews));
+        }
+
+        // Инициализация формы отзыва
+        function initReviewForm() {
+            // Счетчик символов
+            const reviewText = document.getElementById('reviewText');
+            reviewText.addEventListener('input', function () {
+                updateCharCount();
+                checkProfanityRealTime();
+            });
+
+            // Обработка отправки формы
+            const reviewForm = document.getElementById('reviewForm');
+            reviewForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                submitReview();
+            });
+
+            // Валидация в реальном времени
+            const formInputs = reviewForm.querySelectorAll('input[required], select[required], textarea[required]');
+            formInputs.forEach(input => {
+                input.addEventListener('blur', function () {
+                    if (this.value.trim() === '') {
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                    }
+                });
+            });
+
+            // Обработчик для обновления капчи
+            document.getElementById('refreshCaptcha').addEventListener('click', function () {
+                captchaSystem.refresh();
+            });
+
+            // Обработчики для звезд рейтинга
+            const ratingInputs = document.querySelectorAll('.rating-stars input');
+            ratingInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    updateStarsDisplay(this.value);
+                });
+            });
+
+            // Обработчики для критериев мастера с анимацией
+            const criteriaInputs = document.querySelectorAll('.criteria-stars input');
+            criteriaInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const criteriaName = this.name;
+                    const value = this.value;
+                    updateCriteriaStars(criteriaName, value);
+
+                    // Анимация для выбранной звезды
+                    const label = this.nextElementSibling;
+                    label.style.animation = 'starBounce 0.5s ease-in-out';
+                    setTimeout(() => {
+                        label.style.animation = '';
+                    }, 500);
+                });
+            });
+        }
+
+        // Обновление отображения звезд для критериев
+        function updateCriteriaStars(criteriaName, rating) {
+            const criteriaStars = document.querySelectorAll(`.criteria-stars input[name="${criteriaName}"]`);
+            criteriaStars.forEach((star, index) => {
+                const starNumber = index + 1;
+                const label = star.nextElementSibling;
+                if (starNumber <= rating) {
+                    label.style.color = '#ffc107';
+                    label.style.transform = 'scale(1.2)';
+                } else {
+                    label.style.color = '#e4e5e9';
+                    label.style.transform = 'scale(1)';
+                }
+            });
+        }
+
+        // Инициализация модального окна удаления
+        function initDeleteModal() {
+            const modal = document.getElementById('deleteConfirmModal');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const cancelBtn = document.getElementById('cancelDeleteBtn');
+
+            confirmBtn.addEventListener('click', function () {
+                if (currentReviewToDelete) {
+                    deleteReview(currentReviewToDelete);
+                    modal.style.display = 'none';
+                    currentReviewToDelete = null;
+                }
+            });
+
+            cancelBtn.addEventListener('click', function () {
+                modal.style.display = 'none';
+                currentReviewToDelete = null;
+            });
+
+            // Закрытие модального окна при клике вне его
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    currentReviewToDelete = null;
+                }
+            });
+        }
+
+        // Показать модальное окно подтверждения удаления
+        function showDeleteConfirm(reviewId) {
+            currentReviewToDelete = reviewId;
+            const modal = document.getElementById('deleteConfirmModal');
+            modal.style.display = 'block';
+        }
+
+        // Удаление отзыва
+        function deleteReview(reviewId) {
+            const reviewIndex = allReviews.findIndex(review => review.id === reviewId);
+            if (reviewIndex !== -1) {
+                allReviews.splice(reviewIndex, 1);
+                saveReviews();
+                displayReviews();
+                updateStatistics();
+
+                // Показываем уведомление об успешном удалении
+                showSuccessMessage('Отзыв успешно удален');
+            }
+        }
+
+        // Проверка, принадлежит ли отзыв текущему пользователю (упрощенная версия)
+        function isUserReview(review) {
+            // В реальном приложении здесь должна быть проверка авторизации
+            // Для демонстрации считаем, что пользователь может удалять отзывы с тем же email
+            const userEmail = document.getElementById('clientEmail').value;
+            return review.userEmail === userEmail;
+        }
+
+        // Проверка капчи
+        function validateCaptcha() {
+            const userAnswer = document.getElementById('captchaInput').value;
+            const captchaInput = document.getElementById('captchaInput');
+            const captchaError = document.getElementById('captchaError');
+
+            if (!captchaSystem.validate(userAnswer)) {
+                captchaInput.classList.add('is-invalid');
+                captchaError.style.display = 'block';
+                return false;
+            } else {
+                captchaInput.classList.remove('is-invalid');
+                captchaError.style.display = 'none';
+                return true;
+            }
+        }
+
+        // Отправка отзыва
+        function submitReview() {
+            if (!validateReviewForm() || !validateCaptcha()) {
+                return;
+            }
+
+            const formData = new FormData(document.getElementById('reviewForm'));
+
+            // Собираем критерии мастера
+            const masterCriteria = {
+                accuracy: parseInt(formData.get('accuracy') || 0),
+                politeness: parseInt(formData.get('politeness') || 0),
+                speed: parseInt(formData.get('speed') || 0),
+                professionalism: parseInt(formData.get('professionalism') || 0),
+                communication: parseInt(formData.get('communication') || 0)
+            };
+
+            // Создаем новый отзыв
+            const newReview = {
+                id: 'review_' + Date.now(),
+                clientName: formData.get('clientName'),
+                avatar: getRandomAvatar(),
+                service: getServiceName(formData.get('serviceType')),
+                master: getMasterName(formData.get('masterName')),
+                rating: parseInt(formData.get('rating')),
+                masterCriteria: masterCriteria,
+                title: formData.get('reviewTitle'),
+                text: censorText(formData.get('reviewText')),
+                date: new Date().toISOString().split('T')[0],
+                isNew: true,
+                userEmail: formData.get('clientEmail') // Сохраняем email для идентификации пользователя
+            };
+
+            // Добавляем отзыв в начало массива
+            allReviews.unshift(newReview);
+
+            // Сохраняем в localStorage
+            saveReviews();
+
+            // Обновляем интерфейс
+            displayReviews();
+            updateStatistics();
+
+            // Показываем уведомление
+            showSuccessMessage('Ваш отзыв успешно опубликован');
+
+            // Сбрасываем форму и очищаем сохраненные данные
+            document.getElementById('reviewForm').reset();
+            updateCharCount();
+            resetStars();
+            resetMasterCriteria();
+            formDataManager.clearFormData();
+
+            // Генерируем новую капчу
+            captchaSystem.refresh();
+
+            // Прокручиваем к новому отзыву
+            setTimeout(() => {
+                document.getElementById('all-reviews').scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+        }
+
+        // Отображение отзывов
+        function displayReviews() {
+            const container = document.getElementById('reviewsContainer');
+            const reviewsToShow = allReviews.slice(0, displayedReviews + reviewsPerPage);
+            const currentUserEmail = document.getElementById('clientEmail').value;
+
+            container.innerHTML = reviewsToShow.map(review => {
+                const canDelete = review.userEmail && review.userEmail === currentUserEmail;
+
+                return `
+                <div class="review-card" id="${review.id}">
+                    ${canDelete ? `
+                    <div class="review-actions">
+                        <button class="delete-review-btn" onclick="showDeleteConfirm('${review.id}')" title="Удалить отзыв">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="review-header">
+                        <div class="review-client">
+                            <img src="${review.avatar}" alt="${review.clientName}" class="client-avatar">
+                            <div class="client-info">
+                                <h4>${review.clientName}</h4>
+                                <div class="service">${review.service}</div>
+                            </div>
+                        </div>
+                        <div class="review-date">
+                            ${formatDate(review.date)}
+                            ${review.isNew ? '<span class="new-review-badge">Новый</span>' : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="review-rating">
+                        ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                    </div>
+                    
+                    <div class="review-title">${review.title}</div>
+                    
+                    <div class="review-text">${review.text}</div>
+
+                    <!-- Блок с критериями оценки мастера -->
+                    ${review.master && review.masterCriteria ? `
+                    <div class="master-criteria">
+                        <div class="criteria-title">Оценка мастера ${review.master}:</div>
+                        ${renderMasterCriteria(review.masterCriteria)}
+                    </div>
+                    ` : ''}
+                    
+                    ${review.master ? `<div class="review-master">Мастер: ${review.master}</div>` : ''}
+                </div>
+                `;
+            }).join('');
+
+            displayedReviews = reviewsToShow.length;
+
+            // Скрываем кнопку "Загрузить еще", если все отзывы показаны
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (displayedReviews >= allReviews.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'inline-block';
+            }
+
+            // Убираем пометку "Новый" через 24 часа
+            setTimeout(() => {
+                const newReview = allReviews.find(r => r.id === review.id);
+                if (newReview) {
+                    newReview.isNew = false;
+                    saveReviews();
+                }
+            }, 24 * 60 * 60 * 1000);
+        }
+
+        // Рендеринг критериев мастера с анимацией
+        function renderMasterCriteria(criteria) {
+            const criteriaNames = {
+                accuracy: 'Аккуратность',
+                politeness: 'Вежливость',
+                speed: 'Скорость работы',
+                professionalism: 'Профессионализм',
+                communication: 'Коммуникабельность'
+            };
+
+            let html = '';
+            for (const [key, value] of Object.entries(criteria)) {
+                if (value > 0) {
+                    html += `
+                    <div class="criteria-item">
+                        <div class="criteria-name">${criteriaNames[key]}</div>
+                        <div class="criteria-rating">
+                            ${Array.from({ length: 5 }, (_, i) => {
+                        const isFilled = i < value;
+                        const starClass = `criteria-star ${isFilled ? 'filled' : ''} ${isFilled ? 'animated' : ''}`;
+                        return `<span class="${starClass}">★</span>`;
+                    }).join('')}
+                        </div>
+                        <div class="criteria-value">${value}/5</div>
+                    </div>
+                    `;
+                }
+            }
+            return html;
+        }
+
+        // Загрузка дополнительных отзывов
+        function loadMoreReviews() {
+            displayReviews();
+        }
+
+        // Сортировка отзывов
+        function sortReviews(type) {
+            if (type === 'date') {
+                allReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (type === 'rating') {
+                allReviews.sort((a, b) => b.rating - a.rating);
+            }
+
+            displayedReviews = 0;
+            displayReviews();
+        }
+
+        // Обновление статистики
+        function updateStatistics() {
+            const total = allReviews.length;
+            const average = (allReviews.reduce((sum, review) => sum + review.rating, 0) / total).toFixed(1);
+
+            // Распределение оценок
+            const ratingCounts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+            allReviews.forEach(review => {
+                ratingCounts[review.rating]++;
+            });
+
+            // Обновляем интерфейс
+            document.getElementById('totalReviews').textContent = total;
+            document.getElementById('averageRating').textContent = average;
+
+            // Обновляем распределение оценок
+            Object.keys(ratingCounts).forEach(rating => {
+                const percentage = total > 0 ? (ratingCounts[rating] / total) * 100 : 0;
+                document.getElementById(`bar${rating}`).style.width = percentage + '%';
+                document.getElementById(`count${rating}`).textContent = ratingCounts[rating];
+            });
+        }
+
+        // Валидация формы
+        function validateReviewForm() {
+            const form = document.getElementById('reviewForm');
+            const reviewText = document.getElementById('reviewText');
+            const profanityWarning = document.getElementById('profanityWarning');
+
+            // Проверка на запрещенные слова
+            if (containsProfanity(reviewText.value)) {
+                profanityWarning.style.display = 'block';
+                reviewText.classList.add('is-invalid');
+                return false;
+            } else {
+                profanityWarning.style.display = 'none';
+                reviewText.classList.remove('is-invalid');
+            }
+
+            // Проверка минимальной длины отзыва
+            if (reviewText.value.trim().length < 10) {
+                reviewText.classList.add('is-invalid');
+                return false;
+            } else {
+                reviewText.classList.remove('is-invalid');
+            }
+
+            return true;
+        }
+
+        // Вспомогательные функции
+        function updateCharCount() {
+            const textarea = document.getElementById('reviewText');
+            const charCount = document.getElementById('charCount');
+            const currentLength = textarea.value.length;
+            charCount.textContent = currentLength;
+
+            if (currentLength > 1000) {
+                charCount.style.color = '#dc3545';
+            } else if (currentLength > 800) {
+                charCount.style.color = '#ffc107';
+            } else {
+                charCount.style.color = '#28a745';
+            }
+        }
+
+        function checkProfanityRealTime() {
+            const reviewText = document.getElementById('reviewText');
+            const profanityWarning = document.getElementById('profanityWarning');
+
+            if (containsProfanity(reviewText.value)) {
+                profanityWarning.style.display = 'block';
+                reviewText.classList.add('is-invalid');
+            } else {
+                profanityWarning.style.display = 'none';
+                reviewText.classList.remove('is-invalid');
+            }
+        }
+
+        function getServiceName(serviceKey) {
+            const services = {
+                haircut: 'Стрижка',
+                coloring: 'Окрашивание',
+                manicure: 'Маникюр',
+                pedicure: 'Педикюр',
+                cosmetology: 'Косметология',
+                makeup: 'Макияж',
+                other: 'Другая услуга'
+            };
+            return services[serviceKey] || serviceKey;
+        }
+
+        function getMasterName(masterKey) {
+            const masters = {
+                tatyana: 'Татьяна',
+                olga: 'Ольга',
+                anna: 'Анна',
+                lilia: 'Лилия',
+                any: 'Любой мастер'
+            };
+            return masters[masterKey] || '';
+        }
+
+        function getRandomAvatar() {
+            const avatars = [
+                'https://avatars.mds.yandex.net/i?id=284c0affc378aa522e14b8c67704560be1d41b3b-4011439-images-thumbs&n=13',
+                'https://avatars.mds.yandex.net/i?id=465afa9b28cade4ce138d04c144eeb0a_l-9223201-images-thumbs&n=13',
+                'https://avatars.mds.yandex.net/i?id=a6ef7df5eb0ae83102956ab695b74d9541ff80b2-4504275-images-thumbs&n=13',
+                'https://avatars.mds.yandex.net/i?id=c15274ccf4ff9538ec4085830e4f5ab5f16c0a36-4494838-images-thumbs&n=13',
+                'https://avatars.mds.yandex.net/i?id=7b827a20dbd151e1366c8586ebb61ee187c64d23-16420753-images-thumbs&n=13'
+            ];
+            return avatars[Math.floor(Math.random() * avatars.length)];
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function showSuccessMessage(message) {
+            // Создаем временное уведомление
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success alert-dismissible fade show position-fixed';
+            alert.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+            alert.innerHTML = `
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>Успех!</strong> ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(alert);
+
+            // Автоматически скрываем через 5 секунд
+            setTimeout(() => {
+                if (alert.parentNode) {
+                    alert.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>
